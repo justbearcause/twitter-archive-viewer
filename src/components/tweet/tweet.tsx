@@ -3,6 +3,7 @@ import React from "react";
 import TweetModel from "../../models/twitter/tweet";
 import { UserMention, Hashtag } from "../../models/twitter/tweet";
 import Account from "../../models/twitter/account";
+import Profile from "../../models/twitter/profile";
 import Media from "../media/media";
 
 import styles from "./tweet.module.css";
@@ -10,54 +11,73 @@ import styles from "./tweet.module.css";
 interface Props {
   tweet: TweetModel;
   author: Account;
+  profile: Profile;
 }
 
 export default class Tweet extends React.Component<Props> {
   public render() {
-    const tweet = this.props.tweet;
-    const author = this.props.author;
+    const { tweet, author, profile } = this.props;
 
-    const createdAt = this._twitterStringToDate(tweet.created_at);
     const statusUrl = `https://twitter.com/${author.username}/status/${tweet.id}`;
     const authorUrl = `https://twitter.com/${author.username}`;
     const hasMedia = !!tweet.extended_entities && !!tweet.extended_entities.media;
 
+    const createdAtDate = this._twitterDateTimeStringToNormalDateString(tweet.created_at);
+    const createdAtTime = this._twitterDateTimeStringToNormalTimeString(tweet.created_at);
+
     return (
       <div className={styles.tweet}>
-        <div className={styles.authorInfo}>
+        <div className={styles.avatarColumn}>
           <a
             target="_blank"
             rel="noopener noreferrer"
             href={authorUrl}
-            className={styles.dimmed}
           >
-            <span className={styles.authorName}>
-              {author.accountDisplayName}
-            </span>
-            <span className={styles.authorUsername}>
-              @{author.username}
-            </span>
-          </a>
-          <a
-            className={styles.dimmed}
-            target="_blank"
-            rel="noopener noreferrer"
-            href={statusUrl}
-          >
-            {createdAt}
+            <img
+              className={styles.avatarImage}
+              src={profile.avatarMediaUrl}
+              alt={author.accountDisplayName}
+            />
           </a>
         </div>
-        <div className={styles.tweetText}>
-          {this._prepareFullText(tweet)}
-        </div>
-        {hasMedia && (
-          <div className={styles.attachments}>
-            {tweet.extended_entities!.media.map(media => <Media key={media.id} media={media} />)}
+        <div className={styles.contentColumn}>
+          <div className={styles.authorInfo}>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={authorUrl}
+              className={styles.dimmed}
+            >
+              <span className={styles.authorName}>
+                {author.accountDisplayName}
+              </span>
+              <span className={styles.authorUsername}>
+                @{author.username}
+              </span>
+            </a>
+            <a
+              className={styles.dimmed}
+              target="_blank"
+              rel="noopener noreferrer"
+              href={statusUrl}
+              title={createdAtTime}
+            >
+              {createdAtDate}
+            </a>
           </div>
-        )}
+          <div className={styles.tweetText}>
+            {this._prepareFullText(tweet)}
+          </div>
+          {hasMedia && (
+            <div className={styles.attachments}>
+              {tweet.extended_entities!.media.map(media => <Media key={media.id} media={media} />)}
+            </div>
+          )}
+        </div>
       </div>
     );
   }
+
   private _prepareFullText(tweet: TweetModel) {
     const text = tweet.full_text;
     const replaces: any[] = [];
@@ -146,7 +166,11 @@ export default class Tweet extends React.Component<Props> {
     return <React.Fragment>{parts}</React.Fragment>;
   }
 
-  private _twitterStringToDate(twitterDate: string) {
-    return Moment(twitterDate, "dd MMM DD HH:mm:ss ZZ YYYY", "en").format("DD.MM.YYYY HH:mm");
-  }
+  private _twitterDateTimeStringToNormalDateString = (twitterDateString: string) =>
+    Moment(twitterDateString, "dd MMM DD HH:mm:ss ZZ YYYY", "en")
+      .format("MMM DD YYYY");
+
+  private _twitterDateTimeStringToNormalTimeString = (twitterDateString: string) =>
+    Moment(twitterDateString, "dd MMM DD HH:mm:ss ZZ YYYY", "en")
+      .format("HH:mm");
 }

@@ -5,15 +5,16 @@ import Tweets from "../tweets/tweets"
 
 export default () => {
   const account = getAccount();
+  const profile = getProfile();
 
-  if (!account)
+  if (!account || !profile)
     return null;
 
   return (
     <Layout>
       <Profile
         account={account}
-        profile={getProfile()}
+        profile={profile}
         ageInfo={getAgeInfo()}
         followings={getFollowings()}
         followers={getFollowers()}
@@ -21,6 +22,7 @@ export default () => {
       <Tweets
         tweets={getTweets()}
         account={account}
+        profile={profile}
       />
     </Layout>
   )
