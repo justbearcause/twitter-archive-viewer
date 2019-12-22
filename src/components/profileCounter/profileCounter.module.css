@@ -1,0 +1,20 @@
+.profileCounter {
+  display: inline-block;
+  color: var(--dimmedColor);
+  margin-right: 10px;
+}
+
+.profileCounter:last-child {
+  margin-right: 0;
+}
+
+.profileCounterNumber {
+  display: inline-block;
+  color: var(--color);
+  font-weight: bolder;
+  margin-right: 5px;
+}
+
+.profileCounterText {
+  display: inline-block;
+}
