@@ -1,0 +1,25 @@
+.profileAttribute {
+  margin-right: 10px;
+  display: inline-block;
+  color: var(--dimmedColor);
+}
+
+.profileAttribute:last-child {
+  margin-right: 0;
+}
+
+.profileAttributeIcon {
+  display: inline-block;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+.profileAttributeIcon svg {
+  height: 1.25em;
+  max-width: 100%;
+  fill: currentcolor;
+}
+
+.profileAttributeText {
+  display: inline-block;
+}
