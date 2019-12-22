@@ -66,7 +66,7 @@ export default class Tweet extends React.Component<Props> {
             </a>
           </div>
           <div className={styles.tweetText}>
-            {this._prepareFullText(tweet)}
+            {this._prepareTweetText(tweet)}
           </div>
           {hasMedia && (
             <div className={styles.attachments}>
@@ -78,8 +78,14 @@ export default class Tweet extends React.Component<Props> {
     );
   }
 
-  private _prepareFullText(tweet: TweetModel) {
-    const text = tweet.full_text;
+  private decodeHtmlEntities = (string: string) => {
+    var textArea = document.createElement('textarea');
+    textArea.innerHTML = string;
+    return textArea.value;
+  };
+
+  private _prepareTweetText(tweet: TweetModel) {
+    const text = this.decodeHtmlEntities(tweet.full_text);
     const replaces: any[] = [];
 
     tweet.entities.hashtags.forEach((hashtag: Hashtag) => {
