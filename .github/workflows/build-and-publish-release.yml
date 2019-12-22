@@ -21,7 +21,7 @@ jobs:
           cmd: build
       - name: Zip build folder
         run: |
-          zip --junk-paths build ./build
+          zip -qq -r ./build.zip ./build
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1.0.0
