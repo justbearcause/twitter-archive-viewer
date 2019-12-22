@@ -4,6 +4,7 @@
   --dimmedColor: rgb(136, 153, 166);
   --borderColor: rgb(56, 68, 77);
   --accentColor: rgb(224, 36, 94);
+  --inputBackground: rgb(37, 51, 65);
 }
 
 @media (prefers-color-scheme: light) {
@@ -12,6 +13,7 @@
     --color: black;
     --dimmedColor: rgb(101, 119, 134);
     --borderColor: rgb(230, 236, 240);
+    --inputBackground: rgb(230, 236, 240);
   }
 }
 
