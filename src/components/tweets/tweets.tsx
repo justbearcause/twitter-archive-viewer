@@ -5,10 +5,12 @@ import TweetModel from "../../models/twitter/tweet";
 import Account from "../../models/twitter/account";
 
 import styles from "./tweets.module.css";
+import Profile from "../../models/twitter/profile";
 
 interface TweetsProps {
   tweets: TweetModel[];
   account: Account;
+  profile: Profile;
 }
 
 export default (props: TweetsProps) => {
@@ -28,7 +30,7 @@ export default (props: TweetsProps) => {
 
   return (
     <div className={styles.tweets}>
-      {state.items.map(tweet => <Tweet key={tweet.id} tweet={tweet} author={props.account} />)}
+      {state.items.map(tweet => <Tweet key={tweet.id} tweet={tweet} author={props.account} profile={props.profile} />)}
       {isFetching && <div>Is Fetching</div>}
     </div>
   );

@@ -2,6 +2,7 @@
   margin: 10px 0;
   padding: 15px;
   border-top: 1px solid var(--borderColor);
+  display: flex;
 }
 
 .authorInfo {
@@ -31,4 +32,21 @@ a.dimmed:hover,
 a.dimmed:visited,
 a.dimmed:active {
   color: var(--dimmedColor);
+}
+
+.avatarColumn {
+  width: 48px;
+  flex: 0 0 48px;
+  overflow: hidden;
+}
+
+.avatarImage {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.contentColumn {
+  flex: 1;
+  padding-left: 15px;
 }
