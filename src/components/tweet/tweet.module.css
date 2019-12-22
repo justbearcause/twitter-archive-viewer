@@ -1,0 +1,34 @@
+.tweet {
+  margin: 10px 0;
+  padding: 15px;
+  border-top: 1px solid var(--borderColor);
+}
+
+.authorInfo {
+  margin-bottom: 10px;
+}
+
+.authorName {
+  color: var(--color);
+  font-weight: 700;
+  margin-right: 10px;
+}
+
+.authorUsername {
+  margin-right: 10px;
+}
+
+.tweetText {
+  white-space: pre-line;
+}
+
+.attachments {
+  margin-top: 10px;
+}
+
+a.dimmed,
+a.dimmed:hover,
+a.dimmed:visited,
+a.dimmed:active {
+  color: var(--dimmedColor);
+}
