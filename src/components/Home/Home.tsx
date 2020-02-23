@@ -67,5 +67,5 @@ const getTweets = () => {
   if (!window.YTD.tweet.part0 || !window.YTD.tweet.part0.length)
     return [];
 
-  return window.YTD.tweet.part0;
+  return window.YTD.tweet.part0.map(x => x.tweet);
 }
