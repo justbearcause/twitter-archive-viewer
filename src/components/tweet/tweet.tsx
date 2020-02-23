@@ -2,24 +2,24 @@ import Moment from "moment";
 import React from "react";
 import TweetModel from "../../models/twitter/tweet";
 import { UserMention, Hashtag } from "../../models/twitter/tweet";
-import Account from "../../models/twitter/account";
-import Profile from "../../models/twitter/profile";
 import Media from "../media/media";
+import { RootState } from "../../store";
+import { connect } from "react-redux";
 
 import styles from "./tweet.module.css";
 
-interface Props {
+type OwnProps = {
   tweet: TweetModel;
-  author: Account;
-  profile: Profile;
 }
 
-export default class Tweet extends React.Component<Props> {
+type Props  = OwnProps & ReturnType<typeof mapStateToProps>;
+
+class Tweet extends React.Component<Props> {
   public render() {
     const { tweet, author, profile } = this.props;
 
-    const statusUrl = `https://twitter.com/${author.username}/status/${tweet.id}`;
-    const authorUrl = `https://twitter.com/${author.username}`;
+    const statusUrl = `https://twitter.com/${author?.username}/status/${tweet.id}`;
+    const authorUrl = `https://twitter.com/${author?.username}`;
     const hasMedia = !!tweet.extended_entities && !!tweet.extended_entities.media;
 
     const createdAtDate = this._twitterDateTimeStringToNormalDateString(tweet.created_at);
@@ -35,8 +35,8 @@ export default class Tweet extends React.Component<Props> {
           >
             <img
               className={styles.avatarImage}
-              src={profile.avatarMediaUrl}
-              alt={author.accountDisplayName}
+              src={profile?.avatarMediaUrl}
+              alt={author?.accountDisplayName}
             />
           </a>
         </div>
@@ -49,10 +49,10 @@ export default class Tweet extends React.Component<Props> {
               className={styles.dimmed}
             >
               <span className={styles.authorName}>
-                {author.accountDisplayName}
+                {author?.accountDisplayName}
               </span>
               <span className={styles.authorUsername}>
-                @{author.username}
+                @{author?.username}
               </span>
             </a>
             <a
@@ -180,3 +180,10 @@ export default class Tweet extends React.Component<Props> {
     Moment(twitterDateString, "dd MMM DD HH:mm:ss ZZ YYYY", "en")
       .format("HH:mm");
 }
+
+const mapStateToProps = (state: RootState) => ({
+  author: state.archive.account,
+  profile: state.archive.profile,
+});
+
+export default connect(mapStateToProps)(Tweet)

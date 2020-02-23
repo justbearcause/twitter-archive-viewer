@@ -1,9 +1,9 @@
 import React from 'react';
-import styles from './App.module.css';
 import Home from './components/Home/Home';
+import ArchiveLoader from './components/ArchiveLoader/ArchiveLoader';
 
 function App() {
-  return <Home />
+  return <ArchiveLoader><Home /></ArchiveLoader> 
 }
 
 export default App;

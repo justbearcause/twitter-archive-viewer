@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import Moment from "moment";
 import ProfileAttribute from "../profileAttribute/profileAttribute";
 import ProfileCounter from "../profileCounter/profileCounter";
@@ -10,16 +10,12 @@ import Follower  from "../../models/twitter/follower";
 import Following  from "../../models/twitter/following";
 
 import styles from "./profile.module.css";
+import { RootState } from "../../store";
+import { connect } from "react-redux";
 
-export class ProfileProps {
-  account?: Account;
-  profile?: ProfileModel;
-  ageInfo?: AgeInfo;
-  followers: Follower[] = [];
-  followings: Following[] = [];
-}
+type Props = ReturnType<typeof mapStateToProps>;
 
-export default (props: ProfileProps) => {
+const Profile: FunctionComponent<Props> = props => {
   const { account, ageInfo, profile, followers, followings } = props;
 
   if (!account) {
@@ -84,3 +80,13 @@ export default (props: ProfileProps) => {
     </div>
   );
 };
+
+const mapStateToProps = (state: RootState) => ({
+  account: state.archive.account,
+  profile: state.archive.profile,
+  ageInfo: state.archive.ageInfo,
+  followers: state.archive.followers,
+  followings: state.archive.followings,
+});
+
+export default connect(mapStateToProps)(Profile)

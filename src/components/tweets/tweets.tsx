@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, FunctionComponent } from "react";
 import Tweet from "../tweet/tweet";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 import TweetModel from "../../models/twitter/tweet";
@@ -7,14 +7,12 @@ import Account from "../../models/twitter/account";
 import styles from "./tweets.module.css";
 import Profile from "../../models/twitter/profile";
 import { SearchIcon } from "../icons/icons";
+import { RootState } from "../../store";
+import { connect } from "react-redux";
 
-interface TweetsProps {
-  tweets: TweetModel[];
-  account: Account;
-  profile: Profile;
-}
+type Props = ReturnType<typeof mapStateToProps>;
 
-export default (props: TweetsProps) => {
+const Tweets : FunctionComponent<Props> = props => {
   const [filter, setFilter] = useState("");
 
   const filterDataSource = useCallback(() => props.tweets.filter(tweet => tweet.full_text.indexOf(filter) >= 0), [props.tweets, filter]);
@@ -56,8 +54,17 @@ export default (props: TweetsProps) => {
         </div>
       </div>
       <div className={styles.tweets}>
-        {state.items.map(tweet => <Tweet key={tweet.id} tweet={tweet} author={props.account} profile={props.profile} />)}
+        {state.items.map(tweet => <Tweet key={tweet.id} tweet={tweet} />)}
       </div>
     </>
   );
 };
+
+
+const mapStateToProps = (state: RootState) => ({
+  account: state.archive.account,
+  profile: state.archive.profile,
+  tweets: state.archive.tweets,
+});
+
+export default connect(mapStateToProps)(Tweets)
