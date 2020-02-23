@@ -1,17 +1,11 @@
-import React, { FunctionComponent } from "react";
 import Moment from "moment";
+import React, { FunctionComponent } from "react";
+import { connect } from "react-redux";
+import { RootState } from "../../store";
+import { BirthdayIcon, CalendarIcon, MapPinIcon } from "../icons/icons";
 import ProfileAttribute from "../profileAttribute/profileAttribute";
 import ProfileCounter from "../profileCounter/profileCounter";
-import { MapPinIcon, BirthdayIcon, CalendarIcon } from "../icons/icons";
-import Account  from "../../models/twitter/account";
-import AgeInfo  from "../../models/twitter/ageInfo";
-import ProfileModel from "../../models/twitter/profile";
-import Follower  from "../../models/twitter/follower";
-import Following  from "../../models/twitter/following";
-
 import styles from "./profile.module.css";
-import { RootState } from "../../store";
-import { connect } from "react-redux";
 
 type Props = ReturnType<typeof mapStateToProps>;
 
@@ -23,10 +17,14 @@ const Profile: FunctionComponent<Props> = props => {
   }
 
   const createdAt = Moment(account.createdAt).format("MMMM YYYY");
-  const birthDate = ageInfo ? Moment(ageInfo.birthDate, "YYYY-MM-DD").format("MMMM DD, YYYY") : undefined;
+  const birthDate = ageInfo
+    ? Moment(ageInfo.birthDate, "YYYY-MM-DD").format("MMMM DD, YYYY")
+    : undefined;
   const location = profile ? profile.description.location : undefined;
-  const avatarUrl = profile ? profile.avatarMediaUrl : undefined;  
-  const backgroundStyles = profile ? { style: { backgroundImage: `url("${profile.headerMediaUrl}")` } } : undefined;
+  const avatarUrl = profile ? profile.avatarMediaUrl : undefined;
+  const backgroundStyles = profile
+    ? { style: { backgroundImage: `url("${profile.headerMediaUrl}")` } }
+    : undefined;
 
   return (
     <div>
@@ -46,16 +44,11 @@ const Profile: FunctionComponent<Props> = props => {
           <div className={styles.profileDisplayName}>
             {account.accountDisplayName}
           </div>
-          <div className={styles.profileUserName}>
-            @{account.username}
-          </div>
+          <div className={styles.profileUserName}>@{account.username}</div>
         </div>
         <div className={styles.profileAttributesRow}>
           {!!location && (
-            <ProfileAttribute
-              icon={<MapPinIcon />}
-              text={location}
-            />
+            <ProfileAttribute icon={<MapPinIcon />} text={location} />
           )}
           <ProfileAttribute
             icon={<BirthdayIcon />}
@@ -67,14 +60,8 @@ const Profile: FunctionComponent<Props> = props => {
           />
         </div>
         <div className={styles.profileCountersRow}>
-          <ProfileCounter
-            text="Following"
-            counter={followings.length}
-          />
-          <ProfileCounter
-            text="Followers"
-            counter={followers.length}
-          />
+          <ProfileCounter text="Following" counter={followings.length} />
+          <ProfileCounter text="Followers" counter={followers.length} />
         </div>
       </div>
     </div>
@@ -86,7 +73,7 @@ const mapStateToProps = (state: RootState) => ({
   profile: state.archive.profile,
   ageInfo: state.archive.ageInfo,
   followers: state.archive.followers,
-  followings: state.archive.followings,
+  followings: state.archive.followings
 });
 
-export default connect(mapStateToProps)(Profile)
+export default connect(mapStateToProps)(Profile);

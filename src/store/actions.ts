@@ -1,49 +1,57 @@
-import { SET_TWEETS, ArchiveActionTypes, SET_FOLLOWERS, SET_FOLLOWINGS, SET_ACCOUNT, SET_PROFILE, SET_AGE_INFO } from "./types";
-import Tweet from "../models/twitter/tweet";
+import Account from "../models/twitter/account";
+import AgeInfo from "../models/twitter/ageInfo";
 import Follower from "../models/twitter/follower";
 import Following from "../models/twitter/following";
-import Account from "../models/twitter/account";
 import Profile from "../models/twitter/profile";
-import AgeInfo from "../models/twitter/ageInfo";
+import Tweet from "../models/twitter/tweet";
+import {
+  ArchiveActionTypes,
+  SET_ACCOUNT,
+  SET_AGE_INFO,
+  SET_FOLLOWERS,
+  SET_FOLLOWINGS,
+  SET_PROFILE,
+  SET_TWEETS
+} from "./types";
 
 export function setTweets(tweets: Tweet[]): ArchiveActionTypes {
-    return {
-        type: SET_TWEETS,
-        payload: tweets
-    }
+  return {
+    type: SET_TWEETS,
+    payload: tweets
+  };
 }
 
 export function setFollowers(followers: Follower[]): ArchiveActionTypes {
-    return {
-        type: SET_FOLLOWERS,
-        payload: followers
-    }
+  return {
+    type: SET_FOLLOWERS,
+    payload: followers
+  };
 }
 
 export function setFollowings(followings: Following[]): ArchiveActionTypes {
-    return {
-        type: SET_FOLLOWINGS,
-        payload: followings
-    }
+  return {
+    type: SET_FOLLOWINGS,
+    payload: followings
+  };
 }
 
 export function setAccount(account?: Account): ArchiveActionTypes {
-    return {
-        type: SET_ACCOUNT,
-        payload: account
-    }
+  return {
+    type: SET_ACCOUNT,
+    payload: account
+  };
 }
 
 export function setProfile(profile?: Profile): ArchiveActionTypes {
-    return {
-        type: SET_PROFILE,
-        payload: profile
-    }
+  return {
+    type: SET_PROFILE,
+    payload: profile
+  };
 }
 
 export function setAgeInfo(ageInfo?: AgeInfo): ArchiveActionTypes {
-    return {
-        type: SET_AGE_INFO,
-        payload: ageInfo
-    }
+  return {
+    type: SET_AGE_INFO,
+    payload: ageInfo
+  };
 }
