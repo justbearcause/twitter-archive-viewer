@@ -1,42 +1,41 @@
 import Moment from "moment";
 import React from "react";
-import TweetModel from "../../models/twitter/tweet";
-import { UserMention, Hashtag } from "../../models/twitter/tweet";
-import Account from "../../models/twitter/account";
-import Profile from "../../models/twitter/profile";
+import { connect } from "react-redux";
+import TweetModel, { Hashtag, UserMention } from "../../models/twitter/tweet";
+import { RootState } from "../../store";
 import Media from "../media/media";
-
 import styles from "./tweet.module.css";
 
-interface Props {
+type OwnProps = {
   tweet: TweetModel;
-  author: Account;
-  profile: Profile;
-}
+};
 
-export default class Tweet extends React.Component<Props> {
+type Props = OwnProps & ReturnType<typeof mapStateToProps>;
+
+class Tweet extends React.Component<Props> {
   public render() {
     const { tweet, author, profile } = this.props;
 
-    const statusUrl = `https://twitter.com/${author.username}/status/${tweet.id}`;
-    const authorUrl = `https://twitter.com/${author.username}`;
-    const hasMedia = !!tweet.extended_entities && !!tweet.extended_entities.media;
+    const statusUrl = `https://twitter.com/${author?.username}/status/${tweet.id}`;
+    const authorUrl = `https://twitter.com/${author?.username}`;
+    const hasMedia =
+      !!tweet.extended_entities && !!tweet.extended_entities.media;
 
-    const createdAtDate = this._twitterDateTimeStringToNormalDateString(tweet.created_at);
-    const createdAtTime = this._twitterDateTimeStringToNormalTimeString(tweet.created_at);
+    const createdAtDate = this._twitterDateTimeStringToNormalDateString(
+      tweet.created_at
+    );
+    const createdAtTime = this._twitterDateTimeStringToNormalTimeString(
+      tweet.created_at
+    );
 
     return (
       <div className={styles.tweet}>
         <div className={styles.avatarColumn}>
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href={authorUrl}
-          >
+          <a target="_blank" rel="noopener noreferrer" href={authorUrl}>
             <img
               className={styles.avatarImage}
-              src={profile.avatarMediaUrl}
-              alt={author.accountDisplayName}
+              src={profile?.avatarMediaUrl}
+              alt={author?.accountDisplayName}
             />
           </a>
         </div>
@@ -49,11 +48,9 @@ export default class Tweet extends React.Component<Props> {
               className={styles.dimmed}
             >
               <span className={styles.authorName}>
-                {author.accountDisplayName}
+                {author?.accountDisplayName}
               </span>
-              <span className={styles.authorUsername}>
-                @{author.username}
-              </span>
+              <span className={styles.authorUsername}>@{author?.username}</span>
             </a>
             <a
               className={styles.dimmed}
@@ -70,7 +67,9 @@ export default class Tweet extends React.Component<Props> {
           </div>
           {hasMedia && (
             <div className={styles.attachments}>
-              {tweet.extended_entities!.media.map(media => <Media key={media.id} media={media} />)}
+              {tweet.extended_entities!.media.map(media => (
+                <Media key={media.id} media={media} />
+              ))}
             </div>
           )}
         </div>
@@ -79,7 +78,7 @@ export default class Tweet extends React.Component<Props> {
   }
 
   private decodeHtmlEntities = (string: string) => {
-    var textArea = document.createElement('textarea');
+    var textArea = document.createElement("textarea");
     textArea.innerHTML = string;
     return textArea.value;
   };
@@ -99,7 +98,7 @@ export default class Tweet extends React.Component<Props> {
           <a target="_blank" rel="noopener noreferrer" key={key} href={url}>
             #{hashtag.text}
           </a>
-        ),
+        )
       });
     });
 
@@ -114,7 +113,7 @@ export default class Tweet extends React.Component<Props> {
           <a target="_blank" rel="noopener noreferrer" key={key} href={url}>
             @{mention.screen_name}
           </a>
-        ),
+        )
       });
     });
 
@@ -128,7 +127,7 @@ export default class Tweet extends React.Component<Props> {
           <a target="_blank" rel="noopener noreferrer" key={key} href={url.url}>
             {url.display_url}
           </a>
-        ),
+        )
       });
     });
 
@@ -140,10 +139,15 @@ export default class Tweet extends React.Component<Props> {
           from: +media.indices[0],
           to: +media.indices[1],
           content: (
-            <a target="_blank" rel="noopener noreferrer" key={key} href={media.media_url}>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              key={key}
+              href={media.media_url}
+            >
               {media.url}
             </a>
-          ),
+          )
         });
       });
     }
@@ -155,7 +159,11 @@ export default class Tweet extends React.Component<Props> {
     let currentIndex = 0;
     replaces.forEach((replace: any) => {
       if (replace.from !== currentIndex) {
-        parts.push(<span key={currentIndex}>{" " + text.substring(currentIndex, replace.from) + " "}</span>);
+        parts.push(
+          <span key={currentIndex}>
+            {" " + text.substring(currentIndex, replace.from) + " "}
+          </span>
+        );
       } else if (currentIndex > 0) {
         parts.push(<span key={`${currentIndex}sep`}> </span>);
       }
@@ -166,17 +174,32 @@ export default class Tweet extends React.Component<Props> {
     });
 
     if (currentIndex < text.length - 1) {
-      parts.push(<span key={currentIndex}>{" " + text.substring(currentIndex)}</span>);
+      parts.push(
+        <span key={currentIndex}>{" " + text.substring(currentIndex)}</span>
+      );
     }
 
     return <React.Fragment>{parts}</React.Fragment>;
   }
 
-  private _twitterDateTimeStringToNormalDateString = (twitterDateString: string) =>
-    Moment(twitterDateString, "dd MMM DD HH:mm:ss ZZ YYYY", "en")
-      .format("MMM DD YYYY");
+  private _twitterDateTimeStringToNormalDateString = (
+    twitterDateString: string
+  ) =>
+    Moment(twitterDateString, "dd MMM DD HH:mm:ss ZZ YYYY", "en").format(
+      "MMM DD YYYY"
+    );
 
-  private _twitterDateTimeStringToNormalTimeString = (twitterDateString: string) =>
-    Moment(twitterDateString, "dd MMM DD HH:mm:ss ZZ YYYY", "en")
-      .format("HH:mm");
+  private _twitterDateTimeStringToNormalTimeString = (
+    twitterDateString: string
+  ) =>
+    Moment(twitterDateString, "dd MMM DD HH:mm:ss ZZ YYYY", "en").format(
+      "HH:mm"
+    );
 }
+
+const mapStateToProps = (state: RootState) => ({
+  author: state.archive.account,
+  profile: state.archive.profile
+});
+
+export default connect(mapStateToProps)(Tweet);

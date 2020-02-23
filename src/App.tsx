@@ -1,9 +1,13 @@
-import React from 'react';
-import styles from './App.module.css';
-import Home from './components/Home/Home';
+import React from "react";
+import ArchiveLoader from "./components/ArchiveLoader/ArchiveLoader";
+import Home from "./components/Home/Home";
 
 function App() {
-  return <Home />
+  return (
+    <ArchiveLoader>
+      <Home />
+    </ArchiveLoader>
+  );
 }
 
 export default App;

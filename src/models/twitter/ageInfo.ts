@@ -1,4 +1,4 @@
 export default interface AgeInfo {
-  age:       string[];
+  age: string[];
   birthDate: Date;
 }
