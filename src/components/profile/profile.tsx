@@ -10,7 +10,14 @@ import styles from "./profile.module.css";
 type Props = ReturnType<typeof mapStateToProps>;
 
 const Profile: FunctionComponent<Props> = props => {
-  const { account, ageInfo, profile, followers, followings } = props;
+  const {
+    account,
+    ageInfo,
+    profile,
+    followersCount,
+    followingsCount,
+    tweetsCount
+  } = props;
 
   if (!account) {
     return null;
@@ -60,8 +67,9 @@ const Profile: FunctionComponent<Props> = props => {
           />
         </div>
         <div className={styles.profileCountersRow}>
-          <ProfileCounter text="Following" counter={followings.length} />
-          <ProfileCounter text="Followers" counter={followers.length} />
+          <ProfileCounter text="Tweets" counter={tweetsCount} />
+          <ProfileCounter text="Following" counter={followingsCount} />
+          <ProfileCounter text="Followers" counter={followersCount} />
         </div>
       </div>
     </div>
@@ -72,8 +80,9 @@ const mapStateToProps = (state: RootState) => ({
   account: state.archive.account,
   profile: state.archive.profile,
   ageInfo: state.archive.ageInfo,
-  followers: state.archive.followers,
-  followings: state.archive.followings
+  followersCount: state.archive.followers.length,
+  followingsCount: state.archive.followings.length,
+  tweetsCount: state.archive.tweets.length
 });
 
 export default connect(mapStateToProps)(Profile);
