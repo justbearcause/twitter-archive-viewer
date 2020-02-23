@@ -1,36 +1,37 @@
-import React from "react";
 import Moment from "moment";
+import React, { FunctionComponent } from "react";
+import { connect } from "react-redux";
+import { RootState } from "../../store";
+import { BirthdayIcon, CalendarIcon, MapPinIcon } from "../icons/icons";
 import ProfileAttribute from "../profileAttribute/profileAttribute";
 import ProfileCounter from "../profileCounter/profileCounter";
-import { MapPinIcon, BirthdayIcon, CalendarIcon } from "../icons/icons";
-import Account  from "../../models/twitter/account";
-import AgeInfo  from "../../models/twitter/ageInfo";
-import ProfileModel from "../../models/twitter/profile";
-import Follower  from "../../models/twitter/follower";
-import Following  from "../../models/twitter/following";
-
 import styles from "./profile.module.css";
 
-export class ProfileProps {
-  account?: Account;
-  profile?: ProfileModel;
-  ageInfo?: AgeInfo;
-  followers: Follower[] = [];
-  followings: Following[] = [];
-}
+type Props = ReturnType<typeof mapStateToProps>;
 
-export default (props: ProfileProps) => {
-  const { account, ageInfo, profile, followers, followings } = props;
+const Profile: FunctionComponent<Props> = props => {
+  const {
+    account,
+    ageInfo,
+    profile,
+    followersCount,
+    followingsCount,
+    tweetsCount
+  } = props;
 
   if (!account) {
     return null;
   }
 
   const createdAt = Moment(account.createdAt).format("MMMM YYYY");
-  const birthDate = ageInfo ? Moment(ageInfo.birthDate, "YYYY-MM-DD").format("MMMM DD, YYYY") : undefined;
+  const birthDate = ageInfo
+    ? Moment(ageInfo.birthDate, "YYYY-MM-DD").format("MMMM DD, YYYY")
+    : undefined;
   const location = profile ? profile.description.location : undefined;
-  const avatarUrl = profile ? profile.avatarMediaUrl : undefined;  
-  const backgroundStyles = profile ? { style: { backgroundImage: `url("${profile.headerMediaUrl}")` } } : undefined;
+  const avatarUrl = profile ? profile.avatarMediaUrl : undefined;
+  const backgroundStyles = profile
+    ? { style: { backgroundImage: `url("${profile.headerMediaUrl}")` } }
+    : undefined;
 
   return (
     <div>
@@ -50,16 +51,11 @@ export default (props: ProfileProps) => {
           <div className={styles.profileDisplayName}>
             {account.accountDisplayName}
           </div>
-          <div className={styles.profileUserName}>
-            @{account.username}
-          </div>
+          <div className={styles.profileUserName}>@{account.username}</div>
         </div>
         <div className={styles.profileAttributesRow}>
           {!!location && (
-            <ProfileAttribute
-              icon={<MapPinIcon />}
-              text={location}
-            />
+            <ProfileAttribute icon={<MapPinIcon />} text={location} />
           )}
           <ProfileAttribute
             icon={<BirthdayIcon />}
@@ -71,16 +67,22 @@ export default (props: ProfileProps) => {
           />
         </div>
         <div className={styles.profileCountersRow}>
-          <ProfileCounter
-            text="Following"
-            counter={followings.length}
-          />
-          <ProfileCounter
-            text="Followers"
-            counter={followers.length}
-          />
+          <ProfileCounter text="Tweets" counter={tweetsCount} />
+          <ProfileCounter text="Following" counter={followingsCount} />
+          <ProfileCounter text="Followers" counter={followersCount} />
         </div>
       </div>
     </div>
   );
 };
+
+const mapStateToProps = (state: RootState) => ({
+  account: state.archive.account,
+  profile: state.archive.profile,
+  ageInfo: state.archive.ageInfo,
+  followersCount: state.archive.followers.length,
+  followingsCount: state.archive.followings.length,
+  tweetsCount: state.archive.tweets.length
+});
+
+export default connect(mapStateToProps)(Profile);
