@@ -1,10 +1,11 @@
 import Moment from "moment";
 import React from "react";
 import { connect } from "react-redux";
-import TweetModel, {
+import {
+  TweetModel,
   TweetHashtagModel,
   TweetUserMentionModel
-} from "../../models/TweetModel";
+} from "../../models";
 import { RootState } from "../../store";
 import Media from "../media/media";
 import styles from "./tweet.module.css";

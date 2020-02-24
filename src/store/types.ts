@@ -1,9 +1,11 @@
-import AccountModel from "../models/AccountModel";
-import AgeInfoModel from "../models/AgeInfoModel";
-import FollowerModel from "../models/FollowerModel";
-import FollowingModel from "../models/FollowingModel";
-import ProfileModel from "../models/ProfileModel";
-import TweetModel from "../models/TweetModel";
+import {
+  AccountModel,
+  AgeInfoModel,
+  FollowerModel,
+  FollowingModel,
+  ProfileModel,
+  TweetModel
+} from "../models";
 
 export const SET_TWEETS = "SET_TWEETS";
 export const SET_FOLLOWINGS = "SET_FOLLOWINGS";
