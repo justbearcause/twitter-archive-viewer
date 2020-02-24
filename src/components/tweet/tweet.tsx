@@ -1,7 +1,10 @@
 import Moment from "moment";
 import React from "react";
 import { connect } from "react-redux";
-import TweetModel, { Hashtag, UserMention } from "../../models/twitter/tweet";
+import TweetModel, {
+  TweetHashtagModel,
+  TweetUserMentionModel
+} from "../../models/TweetModel";
 import { RootState } from "../../store";
 import Media from "../media/media";
 import styles from "./tweet.module.css";
@@ -87,7 +90,7 @@ class Tweet extends React.Component<Props> {
     const text = this.decodeHtmlEntities(tweet.full_text);
     const replaces: any[] = [];
 
-    tweet.entities.hashtags.forEach((hashtag: Hashtag) => {
+    tweet.entities.hashtags.forEach((hashtag: TweetHashtagModel) => {
       const url = `https://twitter.com/hashtag/${hashtag.text}`;
       const key = hashtag.indices[0];
 
@@ -102,7 +105,7 @@ class Tweet extends React.Component<Props> {
       });
     });
 
-    tweet.entities.user_mentions.forEach((mention: UserMention) => {
+    tweet.entities.user_mentions.forEach((mention: TweetUserMentionModel) => {
       const url = `https://twitter.com/${mention.screen_name}`;
       const key = mention.indices[0];
 

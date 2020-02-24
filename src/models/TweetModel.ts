@@ -1,7 +1,7 @@
-export default interface Tweet {
+export default interface TweetModel {
   retweeted: boolean;
   source: string;
-  entities: Entities;
+  entities: TweetEntitiesModel;
   display_text_range: string[];
   favorite_count: string;
   in_reply_to_status_id_str?: string;
@@ -18,30 +18,30 @@ export default interface Tweet {
   in_reply_to_screen_name?: string;
   in_reply_to_user_id_str?: string;
   possibly_sensitive?: boolean;
-  extended_entities?: ExtendedEntities;
-  coordinates?: Coordinates;
-  geo?: Coordinates;
+  extended_entities?: TweetExtendedEntitiesModel;
+  coordinates?: TweetCoordinatesModel;
+  geo?: TweetCoordinatesModel;
 }
 
-export interface Coordinates {
+export interface TweetCoordinatesModel {
   type: string;
   coordinates: string[];
 }
 
-export interface Entities {
-  hashtags: Hashtag[];
+export interface TweetEntitiesModel {
+  hashtags: TweetHashtagModel[];
   symbols: any[];
-  user_mentions: UserMention[];
-  urls: URL[];
-  media?: Media[];
+  user_mentions: TweetUserMentionModel[];
+  urls: TweetUrlModel[];
+  media?: TweetMediaModel[];
 }
 
-export interface Hashtag {
+export interface TweetHashtagModel {
   text: string;
   indices: string[];
 }
 
-export interface Media {
+export interface TweetMediaModel {
   expanded_url: string;
   indices: string[];
   url: string;
@@ -49,68 +49,68 @@ export interface Media {
   id_str: string;
   id: string;
   media_url_https: string;
-  sizes: Sizes;
-  type: Type;
+  sizes: TweetMediaSizesModel;
+  type: TweetMediaTypeEnum;
   display_url: string;
   source_status_id?: string;
   source_user_id?: string;
   source_user_id_str?: string;
   source_status_id_str?: string;
-  video_info?: VideoInfo;
-  additional_media_info?: AdditionalMediaInfo;
+  video_info?: TweetMediaVideoInfoModel;
+  additional_media_info?: TweetAdditionalMediaInfoModel;
 }
 
-export interface AdditionalMediaInfo {
+export interface TweetAdditionalMediaInfoModel {
   monetizable: boolean;
   title?: string;
   description?: string;
   embeddable?: boolean;
 }
 
-export interface Sizes {
-  thumb: Large;
-  medium: Large;
-  small: Large;
-  large: Large;
+export interface TweetMediaSizesModel {
+  thumb: TweetMediaSizeModel;
+  medium: TweetMediaSizeModel;
+  small: TweetMediaSizeModel;
+  large: TweetMediaSizeModel;
 }
 
-export interface Large {
+export interface TweetMediaSizeModel {
   w: string;
   h: string;
-  resize: Resize;
+  resize: TweetMediaResizeEnum;
 }
 
-export enum Resize {
+export enum TweetMediaResizeEnum {
   Crop = "crop",
   Fit = "fit"
 }
 
-export enum Type {
+export enum TweetMediaTypeEnum {
   AnimatedGIF = "animated_gif",
   Photo = "photo",
   Video = "video"
 }
 
-export interface VideoInfo {
+export interface TweetMediaVideoInfoModel {
   aspect_ratio: string[];
   duration_millis?: string;
-  variants: Variant[];
+  variants: TweetMediaVideoVariantModel[];
 }
 
-export interface Variant {
+export interface TweetMediaVideoVariantModel {
   bitrate?: string;
   content_type: string;
   url: string;
 }
 
-export interface URL {
+export interface TweetUrlModel {
   url: string;
   expanded_url: string;
   display_url: string;
   indices: string[];
 }
 
-export interface UserMention {
+export interface TweetUserMentionModel {
   name: string;
   screen_name: string;
   indices: string[];
@@ -118,6 +118,6 @@ export interface UserMention {
   id: string;
 }
 
-export interface ExtendedEntities {
-  media: Media[];
+export interface TweetExtendedEntitiesModel {
+  media: TweetMediaModel[];
 }

@@ -1,4 +1,4 @@
-export default interface Account {
+export default interface AccountModel {
   phoneNumber: string;
   email: string;
   createdVia: string;

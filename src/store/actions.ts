@@ -1,9 +1,9 @@
-import Account from "../models/twitter/account";
-import AgeInfo from "../models/twitter/ageInfo";
-import Follower from "../models/twitter/follower";
-import Following from "../models/twitter/following";
-import Profile from "../models/twitter/profile";
-import Tweet from "../models/twitter/tweet";
+import AccountModel from "../models/AccountModel";
+import AgeInfoModel from "../models/AgeInfoModel";
+import FollowerModel from "../models/FollowerModel";
+import FollowingModel from "../models/FollowingModel";
+import ProfileModel from "../models/ProfileModel";
+import TweetModel from "../models/TweetModel";
 import {
   ArchiveActionTypes,
   SET_ACCOUNT,
@@ -14,42 +14,44 @@ import {
   SET_TWEETS
 } from "./types";
 
-export function setTweets(tweets: Tweet[]): ArchiveActionTypes {
+export function setTweets(tweets: TweetModel[]): ArchiveActionTypes {
   return {
     type: SET_TWEETS,
     payload: tweets
   };
 }
 
-export function setFollowers(followers: Follower[]): ArchiveActionTypes {
+export function setFollowers(followers: FollowerModel[]): ArchiveActionTypes {
   return {
     type: SET_FOLLOWERS,
     payload: followers
   };
 }
 
-export function setFollowings(followings: Following[]): ArchiveActionTypes {
+export function setFollowings(
+  followings: FollowingModel[]
+): ArchiveActionTypes {
   return {
     type: SET_FOLLOWINGS,
     payload: followings
   };
 }
 
-export function setAccount(account?: Account): ArchiveActionTypes {
+export function setAccount(account?: AccountModel): ArchiveActionTypes {
   return {
     type: SET_ACCOUNT,
     payload: account
   };
 }
 
-export function setProfile(profile?: Profile): ArchiveActionTypes {
+export function setProfile(profile?: ProfileModel): ArchiveActionTypes {
   return {
     type: SET_PROFILE,
     payload: profile
   };
 }
 
-export function setAgeInfo(ageInfo?: AgeInfo): ArchiveActionTypes {
+export function setAgeInfo(ageInfo?: AgeInfoModel): ArchiveActionTypes {
   return {
     type: SET_AGE_INFO,
     payload: ageInfo

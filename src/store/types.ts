@@ -1,9 +1,9 @@
-import Account from "../models/twitter/account";
-import AgeInfo from "../models/twitter/ageInfo";
-import Follower from "../models/twitter/follower";
-import Following from "../models/twitter/following";
-import Profile from "../models/twitter/profile";
-import Tweet from "../models/twitter/tweet";
+import AccountModel from "../models/AccountModel";
+import AgeInfoModel from "../models/AgeInfoModel";
+import FollowerModel from "../models/FollowerModel";
+import FollowingModel from "../models/FollowingModel";
+import ProfileModel from "../models/ProfileModel";
+import TweetModel from "../models/TweetModel";
 
 export const SET_TWEETS = "SET_TWEETS";
 export const SET_FOLLOWINGS = "SET_FOLLOWINGS";
@@ -13,42 +13,42 @@ export const SET_PROFILE = "SET_PROFILE";
 export const SET_AGE_INFO = "SET_AGE_INFO";
 
 export interface ArchiveState {
-  tweets: Tweet[];
-  followers: Follower[];
-  followings: Following[];
-  account?: Account;
-  profile?: Profile;
-  ageInfo?: AgeInfo;
+  tweets: TweetModel[];
+  followers: FollowerModel[];
+  followings: FollowingModel[];
+  account?: AccountModel;
+  profile?: ProfileModel;
+  ageInfo?: AgeInfoModel;
 }
 
 interface SetTweetsAction {
   type: typeof SET_TWEETS;
-  payload: Tweet[];
+  payload: TweetModel[];
 }
 
 interface SetFollowingsAction {
   type: typeof SET_FOLLOWINGS;
-  payload: Follower[];
+  payload: FollowerModel[];
 }
 
 interface SetFollowersAction {
   type: typeof SET_FOLLOWERS;
-  payload: Following[];
+  payload: FollowingModel[];
 }
 
 interface SetAccountAction {
   type: typeof SET_ACCOUNT;
-  payload?: Account;
+  payload?: AccountModel;
 }
 
 interface SetProfileAction {
   type: typeof SET_PROFILE;
-  payload?: Profile;
+  payload?: ProfileModel;
 }
 
 interface SetAgeInfoAction {
   type: typeof SET_AGE_INFO;
-  payload?: AgeInfo;
+  payload?: AgeInfoModel;
 }
 
 export type ArchiveActionTypes =

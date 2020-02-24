@@ -1,4 +1,4 @@
-export default interface Following {
+export default interface FollowingModel {
   accountId: string;
   userLink: string;
 }
