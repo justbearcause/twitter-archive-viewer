@@ -1,4 +1,4 @@
-import YtdModel from "./models/YtdModel";
+import { YtdModel } from "./models";
 
 declare global {
   interface Window {

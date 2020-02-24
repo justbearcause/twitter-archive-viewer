@@ -1,5 +1,5 @@
 import FollowerModel from "../FollowerModel";
 
-export default interface FollowersModelWrapper {
+export default interface FollowerModelWrapper {
   part0: { follower: FollowerModel }[];
 }

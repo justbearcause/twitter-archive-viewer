@@ -1,9 +1,11 @@
-import AccountModelWrapper from "./wrappers/AccountModelWrapper";
-import AgeInfoModelWrapper from "./wrappers/AgeInfoModelWrapper";
-import FollowersModelWrapper from "./wrappers/FollowersModelWrapper";
-import FollowingModelWrapper from "./wrappers/FollowingModelWrapper";
-import ProfileModelWrapper from "./wrappers/ProfileModelWrapper";
-import TweetModelWrapper from "./wrappers/TweetModelWrapper";
+import {
+  AccountModelWrapper,
+  AgeInfoModelWrapper,
+  FollowerModelWrapper,
+  FollowingModelWrapper,
+  ProfileModelWrapper,
+  TweetModelWrapper
+} from "./wrappers";
 
 export default interface YtdModel {
   tweet: TweetModelWrapper;
@@ -11,5 +13,5 @@ export default interface YtdModel {
   profile: ProfileModelWrapper;
   ageinfo: AgeInfoModelWrapper;
   following: FollowingModelWrapper;
-  follower: FollowersModelWrapper;
+  follower: FollowerModelWrapper;
 }
