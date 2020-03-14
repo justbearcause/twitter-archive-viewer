@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from "react";
 import { connect } from "react-redux";
 import { RootState } from "../../store";
-import Layout from "../Layout/Layout";
-import Profile from "../Profile/Profile";
-import Tweets from "../Tweets/Tweets";
+import Layout from "../Layout";
+import Profile from "../Profile";
+import Tweets from "../Tweets";
 
 type Props = ReturnType<typeof mapStateToProps>;
 
