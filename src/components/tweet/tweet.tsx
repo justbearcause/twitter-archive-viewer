@@ -7,8 +7,8 @@ import {
   TweetUserMentionModel
 } from "../../models";
 import { RootState } from "../../store";
-import Media from "../media/media";
-import styles from "./tweet.module.css";
+import Media from "../Media/Media";
+import styles from "./Tweet.module.css";
 
 type OwnProps = {
   tweet: TweetModel;

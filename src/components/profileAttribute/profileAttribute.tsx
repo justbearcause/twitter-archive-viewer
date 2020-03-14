@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./profileAttribute.module.css";
+import styles from "./ProfileAttribute.module.css";
 
 interface Props {
   icon: JSX.Element;

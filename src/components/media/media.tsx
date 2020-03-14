@@ -1,6 +1,6 @@
 import React from "react";
 import { TweetMediaModel } from "../../models";
-import styles from "./media.module.css";
+import styles from "./Media.module.css";
 
 interface Props {
   media: TweetMediaModel;
