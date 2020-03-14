@@ -7,9 +7,9 @@ import React, {
 import { connect } from "react-redux";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 import { RootState } from "../../store";
-import { SearchIcon } from "../icons/icons";
-import Tweet from "../tweet/tweet";
-import styles from "./tweets.module.css";
+import { SearchIcon } from "../Icons";
+import Tweet from "../Tweet/Tweet";
+import styles from "./Tweets.module.css";
 
 type Props = ReturnType<typeof mapStateToProps>;
 

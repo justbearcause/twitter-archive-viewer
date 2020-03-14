@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./profileCounter.module.css";
+import styles from "./ProfileCounter.module.css";
 
 interface Props {
   counter: number;

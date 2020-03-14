@@ -2,10 +2,10 @@ import Moment from "moment";
 import React, { FunctionComponent } from "react";
 import { connect } from "react-redux";
 import { RootState } from "../../store";
-import { BirthdayIcon, CalendarIcon, MapPinIcon } from "../icons/icons";
-import ProfileAttribute from "../profileAttribute/profileAttribute";
-import ProfileCounter from "../profileCounter/profileCounter";
-import styles from "./profile.module.css";
+import { BirthdayIcon, CalendarIcon, MapPinIcon } from "../Icons";
+import ProfileAttribute from "../ProfileAttribute/ProfileAttribute";
+import ProfileCounter from "../ProfileCounter/ProfileCounter";
+import styles from "./Profile.module.css";
 
 type Props = ReturnType<typeof mapStateToProps>;
 
