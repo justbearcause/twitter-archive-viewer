@@ -3,8 +3,8 @@ import React, { FunctionComponent } from "react";
 import { connect } from "react-redux";
 import { RootState } from "../../store";
 import { BirthdayIcon, CalendarIcon, MapPinIcon } from "../Icons";
-import ProfileAttribute from "../ProfileAttribute/ProfileAttribute";
-import ProfileCounter from "../ProfileCounter/ProfileCounter";
+import ProfileAttribute from "../ProfileAttribute";
+import ProfileCounter from "../ProfileCounter";
 import styles from "./Profile.module.css";
 
 type Props = ReturnType<typeof mapStateToProps>;
