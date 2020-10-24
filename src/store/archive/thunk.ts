@@ -7,7 +7,7 @@ export const setTweetsThunk = (tweets: TweetModel[]): AppThunkResult => async (
   dispatch: AppThunkDispatch
 ) => {
   tweets.forEach((tweet) => {
-    if (tweet.entities.media == undefined) {
+    if (tweet.entities.media === undefined) {
       return;
     }
 
