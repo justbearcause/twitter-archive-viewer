@@ -5,6 +5,12 @@
   background-repeat: no-repeat;
 }
 
+.profileBackground {
+  object-fit: cover;
+  height: 200px;
+  width: 100%;
+}
+
 .profileInfoContainer {
   padding: 10px 15px 15px 15px;
 }

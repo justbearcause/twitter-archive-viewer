@@ -1,3 +1,4 @@
+import Image from "components/Image";
 import { TweetHashtagModel, TweetModel, TweetUserMentionModel } from "models";
 import Moment from "moment";
 import React from "react";
@@ -13,14 +14,14 @@ type OwnProps = {
 type Props = OwnProps & ReturnType<typeof mapStateToProps>;
 
 const Tweet: React.FunctionComponent<Props> = (props) => {
-  const { tweet, author, profile } = props;
+  const { tweet, user } = props;
 
-  if (!tweet || !author || !profile) {
+  if (!tweet) {
     return null;
   }
 
-  const statusUrl = `https://twitter.com/${author.username}/status/${tweet.id}`;
-  const authorUrl = `https://twitter.com/${author.username}`;
+  const statusUrl = `https://twitter.com/${user.username}/status/${tweet.id}`;
+  const authorUrl = `https://twitter.com/${user.username}`;
   const hasMedia = !!tweet.extended_entities && !!tweet.extended_entities.media;
 
   const createdAtDate = _twitterDateTimeStringToNormalDateString(
@@ -34,11 +35,13 @@ const Tweet: React.FunctionComponent<Props> = (props) => {
     <div className={styles.tweet}>
       <div className={styles.avatarColumn}>
         <a target="_blank" rel="noopener noreferrer" href={authorUrl}>
-          <img
-            className={styles.avatarImage}
-            src={profile.avatarMediaUrl}
-            alt={author.accountDisplayName}
-          />
+          {!!user.avatarMediaImageId && (
+            <Image
+              className={styles.avatarImage}
+              id={user.avatarMediaImageId}
+              alt={user.accountDisplayName || ""}
+            />
+          )}
         </a>
       </div>
       <div className={styles.contentColumn}>
@@ -49,10 +52,8 @@ const Tweet: React.FunctionComponent<Props> = (props) => {
             href={authorUrl}
             className={styles.dimmed}
           >
-            <span className={styles.authorName}>
-              {author.accountDisplayName}
-            </span>
-            <span className={styles.authorUsername}>@{author.username}</span>
+            <span className={styles.authorName}>{user.accountDisplayName}</span>
+            <span className={styles.authorUsername}>@{user.username}</span>
           </a>
           <a
             className={styles.dimmed}
@@ -191,8 +192,7 @@ const _twitterDateTimeStringToNormalTimeString = (twitterDateString: string) =>
   Moment(twitterDateString, "dd MMM DD HH:mm:ss ZZ YYYY", "en").format("HH:mm");
 
 const mapStateToProps = (state: AppState) => ({
-  author: state.archive.account,
-  profile: state.archive.profile,
+  user: state.user,
 });
 
 export default connect(mapStateToProps)(Tweet);
