@@ -6,7 +6,7 @@ interface Props {
   media: TweetMediaModel;
 }
 
-export default (props: Props) => (
+const Media: React.FunctionComponent<Props> = (props) => (
   <div className={styles.mediaContainer}>
     <a target="_blank" rel="noopener noreferrer" href={props.media.media_url}>
       <img
@@ -17,3 +17,5 @@ export default (props: Props) => (
     </a>
   </div>
 );
+
+export default Media;

@@ -13,6 +13,7 @@ import {
 type Props = ReturnType<typeof mapDispatch>;
 
 const ArchiveLoader: FunctionComponent<Props> = (props) => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(props.loadData, []);
 
   return <>{props.children}</>;
