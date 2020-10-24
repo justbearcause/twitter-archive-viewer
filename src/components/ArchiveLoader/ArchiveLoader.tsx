@@ -1,25 +1,24 @@
 import React, { FunctionComponent, useEffect } from "react";
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
+import { AppDispatch } from "store";
 import {
   setAccount,
   setAgeInfo,
   setFollowers,
   setFollowings,
   setProfile,
-  setTweets
-} from "../../store/actions";
-import { ArchiveActionTypes } from "../../store/types";
+  setTweets,
+} from "store/archive";
 
 type Props = ReturnType<typeof mapDispatch>;
 
-const ArchiveLoader: FunctionComponent<Props> = props => {
+const ArchiveLoader: FunctionComponent<Props> = (props) => {
   useEffect(props.loadData, []);
 
   return <>{props.children}</>;
 };
 
-const mapDispatch = (dispatch: Dispatch<ArchiveActionTypes>) => ({
+const mapDispatch = (dispatch: AppDispatch) => ({
   loadData: () => {
     console.log("loadData");
     dispatch(setTweets(getTweets()));
@@ -28,7 +27,7 @@ const mapDispatch = (dispatch: Dispatch<ArchiveActionTypes>) => ({
     dispatch(setAccount(getAccount()));
     dispatch(setProfile(getProfile()));
     dispatch(setAgeInfo(getAgeInfo()));
-  }
+  },
 });
 
 export default connect(null, mapDispatch)(ArchiveLoader);
@@ -36,21 +35,21 @@ export default connect(null, mapDispatch)(ArchiveLoader);
 const getTweets = () => {
   if (!window.YTD.tweet.part0 || !window.YTD.tweet.part0.length) return [];
 
-  return window.YTD.tweet.part0.map(x => x.tweet);
+  return window.YTD.tweet.part0.map((x) => x.tweet);
 };
 
 const getFollowers = () => {
   if (!window.YTD.follower.part0 || !window.YTD.follower.part0.length)
     return [];
 
-  return window.YTD.follower.part0.map(x => x.follower);
+  return window.YTD.follower.part0.map((x) => x.follower);
 };
 
 const getFollowings = () => {
   if (!window.YTD.following.part0 || !window.YTD.following.part0.length)
     return [];
 
-  return window.YTD.following.part0.map(x => x.following);
+  return window.YTD.following.part0.map((x) => x.following);
 };
 
 const getAccount = () => {

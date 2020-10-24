@@ -1,7 +1,7 @@
 import Moment from "moment";
 import React, { FunctionComponent } from "react";
 import { connect } from "react-redux";
-import { RootState } from "../../store";
+import { AppState } from "store";
 import { BirthdayIcon, CalendarIcon, MapPinIcon } from "../Icons";
 import ProfileAttribute from "../ProfileAttribute";
 import ProfileCounter from "../ProfileCounter";
@@ -9,14 +9,14 @@ import styles from "./Profile.module.css";
 
 type Props = ReturnType<typeof mapStateToProps>;
 
-const Profile: FunctionComponent<Props> = props => {
+const Profile: FunctionComponent<Props> = (props) => {
   const {
     account,
     ageInfo,
     profile,
     followersCount,
     followingsCount,
-    tweetsCount
+    tweetsCount,
   } = props;
 
   if (!account) {
@@ -76,13 +76,13 @@ const Profile: FunctionComponent<Props> = props => {
   );
 };
 
-const mapStateToProps = (state: RootState) => ({
+const mapStateToProps = (state: AppState) => ({
   account: state.archive.account,
   profile: state.archive.profile,
   ageInfo: state.archive.ageInfo,
   followersCount: state.archive.followers.length,
   followingsCount: state.archive.followings.length,
-  tweetsCount: state.archive.tweets.length
+  tweetsCount: state.archive.tweets.length,
 });
 
 export default connect(mapStateToProps)(Profile);

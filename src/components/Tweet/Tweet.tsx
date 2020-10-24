@@ -1,12 +1,8 @@
+import { TweetHashtagModel, TweetModel, TweetUserMentionModel } from "models";
 import Moment from "moment";
 import React from "react";
 import { connect } from "react-redux";
-import {
-  TweetModel,
-  TweetHashtagModel,
-  TweetUserMentionModel
-} from "../../models";
-import { RootState } from "../../store";
+import { AppState } from "store";
 import Media from "../Media";
 import styles from "./Tweet.module.css";
 
@@ -71,7 +67,7 @@ class Tweet extends React.Component<Props> {
           </div>
           {hasMedia && (
             <div className={styles.attachments}>
-              {tweet.extended_entities!.media.map(media => (
+              {tweet.extended_entities!.media.map((media) => (
                 <Media key={media.id} media={media} />
               ))}
             </div>
@@ -102,7 +98,7 @@ class Tweet extends React.Component<Props> {
           <a target="_blank" rel="noopener noreferrer" key={key} href={url}>
             #{hashtag.text}
           </a>
-        )
+        ),
       });
     });
 
@@ -117,11 +113,11 @@ class Tweet extends React.Component<Props> {
           <a target="_blank" rel="noopener noreferrer" key={key} href={url}>
             @{mention.screen_name}
           </a>
-        )
+        ),
       });
     });
 
-    tweet.entities.urls.forEach(url => {
+    tweet.entities.urls.forEach((url) => {
       const key = url.indices[0];
 
       replaces.push({
@@ -131,12 +127,12 @@ class Tweet extends React.Component<Props> {
           <a target="_blank" rel="noopener noreferrer" key={key} href={url.url}>
             {url.display_url}
           </a>
-        )
+        ),
       });
     });
 
     if (tweet.entities.media) {
-      tweet.entities.media.forEach(media => {
+      tweet.entities.media.forEach((media) => {
         const key = media.indices[0];
 
         replaces.push({
@@ -151,7 +147,7 @@ class Tweet extends React.Component<Props> {
             >
               {media.url}
             </a>
-          )
+          ),
         });
       });
     }
@@ -201,9 +197,9 @@ class Tweet extends React.Component<Props> {
     );
 }
 
-const mapStateToProps = (state: RootState) => ({
+const mapStateToProps = (state: AppState) => ({
   author: state.archive.account,
-  profile: state.archive.profile
+  profile: state.archive.profile,
 });
 
 export default connect(mapStateToProps)(Tweet);
