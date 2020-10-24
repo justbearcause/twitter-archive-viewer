@@ -1,10 +1,10 @@
-import useInfiniteScroll from "hooks/useInfiniteScroll";
 import React, {
   FunctionComponent,
   useCallback,
   useEffect,
   useState,
 } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { connect } from "react-redux";
 import { AppState } from "store";
 import { SearchIcon } from "../Icons";
@@ -43,8 +43,6 @@ const Tweets: FunctionComponent<Props> = (props) => {
     hasMoreItems: Math.min(filteredTweets.length, 20) < filteredTweets.length,
   });
 
-  const [isFetching] = useInfiniteScroll(fetchMoreListItems);
-
   useEffect(() => setFilteredTweets(filterDataSource()), [
     filter,
     filterDataSource,
@@ -54,6 +52,13 @@ const Tweets: FunctionComponent<Props> = (props) => {
     setState({ items: [], hasMoreItems: true });
     fetchMoreListItems();
   }, [filteredTweets, fetchMoreListItems]);
+
+  const loadingMessage = <h4>Loading...</h4>;
+  const endMessage = (
+    <p style={{ textAlign: "center" }}>
+      <b>Yay! You have seen it all</b>
+    </p>
+  );
 
   return (
     <>
@@ -71,11 +76,19 @@ const Tweets: FunctionComponent<Props> = (props) => {
           </div>
         </div>
       </div>
-      <div className={styles.tweets}>
-        {state.items.map((tweet) => (
-          <Tweet key={tweet.id} tweet={tweet} />
-        ))}
-      </div>
+      <InfiniteScroll
+        dataLength={state.items.length} //This is important field to render the next data
+        next={fetchMoreListItems}
+        hasMore={state.hasMoreItems}
+        loader={loadingMessage}
+        endMessage={endMessage}
+      >
+        <div className={styles.tweets}>
+          {state.items.map((tweet) => (
+            <Tweet key={tweet.id} tweet={tweet} />
+          ))}
+        </div>
+      </InfiniteScroll>
     </>
   );
 };
