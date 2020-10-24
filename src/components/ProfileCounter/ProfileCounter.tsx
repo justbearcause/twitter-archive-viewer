@@ -6,7 +6,7 @@ interface Props {
   text: string;
 }
 
-export default (props: Props) => {
+const ProfileCounter: React.FunctionComponent<Props> = (props) => {
   return (
     <div className={styles.profileCounter}>
       <div className={styles.profileCounterNumber}>
@@ -37,3 +37,5 @@ const formatCounter = (counter: number): string => {
 
   return `${isNegative ? "- " : ""}${visibleCounter}${visiblePostfix}`;
 };
+
+export default ProfileCounter;

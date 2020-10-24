@@ -19,7 +19,7 @@ const Profile: FunctionComponent<Props> = (props) => {
     tweetsCount,
   } = props;
 
-  if (!account) {
+  if (!account || !profile) {
     return null;
   }
 
@@ -27,8 +27,8 @@ const Profile: FunctionComponent<Props> = (props) => {
   const birthDate = ageInfo
     ? Moment(ageInfo.birthDate, "YYYY-MM-DD").format("MMMM DD, YYYY")
     : undefined;
-  const location = profile ? profile.description.location : undefined;
-  const avatarUrl = profile ? profile.avatarMediaUrl : undefined;
+  const location = profile.description.location;
+  const avatarUrl = profile.avatarMediaUrl;
   const backgroundStyles = profile
     ? { style: { backgroundImage: `url("${profile.headerMediaUrl}")` } }
     : undefined;
@@ -43,7 +43,11 @@ const Profile: FunctionComponent<Props> = (props) => {
         <div className={styles.profileAvatarRow}>
           <div className={styles.profileAvatarContainer}>
             {!!avatarUrl && (
-              <img className={styles.profileAvatar} src={avatarUrl} />
+              <img
+                className={styles.profileAvatar}
+                src={avatarUrl}
+                alt={account.accountDisplayName}
+              />
             )}
           </div>
         </div>
@@ -57,10 +61,12 @@ const Profile: FunctionComponent<Props> = (props) => {
           {!!location && (
             <ProfileAttribute icon={<MapPinIcon />} text={location} />
           )}
-          <ProfileAttribute
-            icon={<BirthdayIcon />}
-            text={`Born ${birthDate}`}
-          />
+          {!!birthDate && (
+            <ProfileAttribute
+              icon={<BirthdayIcon />}
+              text={`Born ${birthDate}`}
+            />
+          )}
           <ProfileAttribute
             icon={<CalendarIcon />}
             text={`Joined ${createdAt}`}

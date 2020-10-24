@@ -6,6 +6,8 @@ const appStore = configureStore({
   reducer: {
     archive: archiveReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false, immutableCheck: false }),
 });
 
 export { appStore };
