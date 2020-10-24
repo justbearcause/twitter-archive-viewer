@@ -94,8 +94,6 @@ const Tweets: FunctionComponent<Props> = (props) => {
 };
 
 const mapStateToProps = (state: AppState) => ({
-  account: state.archive.account,
-  profile: state.archive.profile,
   tweets: state.archive.tweets,
 });
 

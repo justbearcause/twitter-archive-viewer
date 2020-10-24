@@ -1,28 +1,11 @@
 import { createReducer } from "@reduxjs/toolkit";
-import {
-  AccountModel,
-  AgeInfoModel,
-  FollowerModel,
-  FollowingModel,
-  ProfileModel,
-  TweetModel,
-} from "models";
-import {
-  setAccount,
-  setAgeInfo,
-  setFollowers,
-  setFollowings,
-  setProfile,
-  setTweets,
-} from "./actions";
+import { FollowerModel, FollowingModel, TweetModel } from "models";
+import { setFollowers, setFollowings, setTweets } from "./actions";
 
 interface ArchiveState {
   tweets: TweetModel[];
   followers: FollowerModel[];
   followings: FollowingModel[];
-  account?: AccountModel;
-  profile?: ProfileModel;
-  ageInfo?: AgeInfoModel;
 }
 
 const initialState: ArchiveState = {
@@ -42,15 +25,7 @@ const archiveReducer = createReducer(initialState, (builder) =>
     .addCase(setFollowings, (state, action) => {
       state.followings = action.payload;
     })
-    .addCase(setAccount, (state, action) => {
-      state.account = action.payload;
-    })
-    .addCase(setProfile, (state, action) => {
-      state.profile = action.payload;
-    })
-    .addCase(setAgeInfo, (state, action) => {
-      state.ageInfo = action.payload;
-    })
+    .addDefaultCase((state) => state)
 );
 
 export { archiveReducer };
