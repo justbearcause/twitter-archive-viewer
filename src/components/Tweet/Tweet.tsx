@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { RetweetIcon } from "components/Icons";
 import Image from "components/Image";
 import { TweetHashtagModel, TweetModel, TweetUserMentionModel } from "models";
 import Moment from "moment";
@@ -33,7 +34,7 @@ const Tweet: React.FunctionComponent<Props> = (props) => {
   };
 
   const statusUrl = `https://twitter.com/${user.username}/status/${tweet.id}`;
-  const authorUrl = `https://twitter.com/${user.username}`;
+
   const hasMedia = !!tweet.extended_entities && !!tweet.extended_entities.media;
 
   const createdAtDate = _twitterDateTimeStringToNormalDateString(
@@ -43,18 +44,38 @@ const Tweet: React.FunctionComponent<Props> = (props) => {
     tweet.created_at
   );
 
+  let isRetweet = false;
+  let originalAuthor = user.username;
+
+  const retweetRegexp = /^RT @([^:]+)/i;
+  const retweetMatch = tweet.full_text.match(retweetRegexp);
+  console.log(tweet.full_text, retweetMatch);
+  if (retweetMatch && retweetMatch.length >= 2 && retweetMatch[1]) {
+    isRetweet = true;
+    originalAuthor = retweetMatch[1];
+  }
+
+  const authorUrl = `https://twitter.com/${
+    !isRetweet ? user.username : originalAuthor
+  }`;
+
+  const authorDisplayName = !isRetweet ? user.accountDisplayName : "Retweet";
+
   return (
     <div className={styles.tweet}>
       <div className={styles.avatarColumn}>
-        <a target="_blank" rel="noopener noreferrer" href={authorUrl}>
-          {!!user.avatarMediaImageId && (
-            <Image
-              className={styles.avatarImage}
-              id={user.avatarMediaImageId}
-              alt={user.accountDisplayName || ""}
-            />
-          )}
-        </a>
+        {!isRetweet && (
+          <a target="_blank" rel="noopener noreferrer" href={authorUrl}>
+            {!!user.avatarMediaImageId && (
+              <Image
+                className={styles.avatarImage}
+                id={user.avatarMediaImageId}
+                alt={user.accountDisplayName || ""}
+              />
+            )}
+          </a>
+        )}
+        {isRetweet && <RetweetIcon className={styles.retweetIcon} />}
       </div>
       <div className={styles.contentColumn}>
         <div className={styles.tweetInfo}>
@@ -65,12 +86,13 @@ const Tweet: React.FunctionComponent<Props> = (props) => {
               href={authorUrl}
               className={classNames(styles.dimmed, styles.tweetAction)}
             >
-              <span className={styles.authorName}>
-                {user.accountDisplayName}
-              </span>
-              <span className={styles.authorUsername}>@{user.username}</span>
+              <span className={styles.authorName}>{authorDisplayName}</span>
+              <span className={styles.authorUsername}>@{originalAuthor}</span>
             </a>
-            <span className={classNames(styles.dimmed, styles.tweetAction)}>
+            <span
+              className={classNames(styles.dimmed, styles.tweetAction)}
+              title={createdAtTime}
+            >
               {createdAtDate}
             </span>
           </div>

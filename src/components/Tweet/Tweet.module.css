@@ -75,3 +75,8 @@
 .dimmed:active {
   color: var(--dimmedColor);
 }
+
+.retweetIcon {
+  fill: currentColor;
+  color: rgb(23, 191, 99);
+}
