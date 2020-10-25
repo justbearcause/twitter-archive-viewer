@@ -3,8 +3,9 @@ import {
   AgeInfoModelWrapper,
   FollowerModelWrapper,
   FollowingModelWrapper,
+  LikeModelWrapper,
   ProfileModelWrapper,
-  TweetModelWrapper
+  TweetModelWrapper,
 } from "./wrappers";
 
 export default interface YtdModel {
@@ -14,4 +15,5 @@ export default interface YtdModel {
   ageinfo: AgeInfoModelWrapper;
   following: FollowingModelWrapper;
   follower: FollowerModelWrapper;
+  like: LikeModelWrapper;
 }

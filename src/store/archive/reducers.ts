@@ -1,18 +1,12 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { FollowerModel, FollowingModel, TweetModel } from "models";
-import { setFollowers, setFollowings, setTweets } from "./actions";
-
-interface ArchiveState {
-  tweets: TweetModel[];
-  followers: FollowerModel[];
-  followings: FollowingModel[];
-}
-
-const initialState: ArchiveState = {
-  tweets: [],
-  followers: [],
-  followings: [],
-};
+import {
+  closeModal,
+  setFollowers,
+  setFollowings,
+  setTweets,
+  showModal,
+} from "./actions";
+import { initialState } from "./types";
 
 const archiveReducer = createReducer(initialState, (builder) =>
   builder
@@ -24,6 +18,14 @@ const archiveReducer = createReducer(initialState, (builder) =>
     })
     .addCase(setFollowings, (state, action) => {
       state.followings = action.payload;
+    })
+    .addCase(showModal, (state, action) => {
+      state.modalContent = action.payload;
+      state.isModalVisible = true;
+    })
+    .addCase(closeModal, (state) => {
+      state.isModalVisible = false;
+      state.modalContent = undefined;
     })
     .addDefaultCase((state) => state)
 );

@@ -2,6 +2,7 @@ import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import { archiveReducer } from "./archive";
 import { imageReducer } from "./images";
+import { likesReducer } from "./likes";
 import { userReducer } from "./user";
 
 const appStore = configureStore({
@@ -9,6 +10,7 @@ const appStore = configureStore({
     archive: archiveReducer,
     user: userReducer,
     images: imageReducer,
+    likes: likesReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false, immutableCheck: false }),

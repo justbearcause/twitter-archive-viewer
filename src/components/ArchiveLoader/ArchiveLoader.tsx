@@ -2,6 +2,7 @@ import React, { FunctionComponent, useEffect } from "react";
 import { connect } from "react-redux";
 import { AppDispatch } from "store";
 import { setFollowers, setFollowings, setTweetsThunk } from "store/archive";
+import { setLikes } from "store/likes";
 import { setUserThunk } from "store/user";
 
 type Props = ReturnType<typeof mapDispatch>;
@@ -19,6 +20,7 @@ const mapDispatch = (dispatch: AppDispatch) => ({
     dispatch(setFollowers(getFollowers()));
     dispatch(setFollowings(getFollowings()));
     dispatch(setUserThunk(getProfile(), getAccount(), getAgeInfo()));
+    dispatch(setLikes(getLikes()));
   },
 });
 
@@ -46,4 +48,8 @@ const getProfile = () => {
 
 const getAgeInfo = () => {
   return window.YTD.ageinfo?.part0?.shift()?.ageMeta?.ageInfo;
+};
+
+const getLikes = () => {
+  return window.YTD.like?.part0?.map((x) => x.like);
 };

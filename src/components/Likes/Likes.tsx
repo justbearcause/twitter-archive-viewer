@@ -1,3 +1,4 @@
+import Like from "components/Like";
 import React, {
   FunctionComponent,
   useCallback,
@@ -8,20 +9,19 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { connect } from "react-redux";
 import { AppState } from "store";
 import { SearchIcon } from "../Icons";
-import Tweet from "../Tweet";
-import styles from "./Tweets.module.css";
+import styles from "./Likes.module.css";
 
 type Props = ReturnType<typeof mapStateToProps>;
 
-const Tweets: FunctionComponent<Props> = (props) => {
+const Likes: FunctionComponent<Props> = (props) => {
   const [filter, setFilter] = useState("");
 
   const filterDataSource = useCallback(
     () =>
       filter
-        ? props.tweets.filter((tweet) => tweet.full_text.indexOf(filter) >= 0)
-        : props.tweets,
-    [props.tweets, filter]
+        ? props.likes.filter((like) => like.fullText.indexOf(filter) >= 0)
+        : props.likes,
+    [props.likes, filter]
   );
 
   const [filteredTweets, setFilteredTweets] = useState(filterDataSource());
@@ -87,8 +87,8 @@ const Tweets: FunctionComponent<Props> = (props) => {
         endMessage={endMessage}
       >
         <div className={styles.tweets}>
-          {state.items.map((tweet) => (
-            <Tweet key={tweet.id} tweet={tweet} />
+          {state.items.map((like) => (
+            <Like key={like.tweetId} like={like} />
           ))}
         </div>
       </InfiniteScroll>
@@ -97,7 +97,7 @@ const Tweets: FunctionComponent<Props> = (props) => {
 };
 
 const mapStateToProps = (state: AppState) => ({
-  tweets: state.archive.tweets,
+  likes: state.likes.likes,
 });
 
-export default connect(mapStateToProps)(Tweets);
+export default connect(mapStateToProps)(Likes);
