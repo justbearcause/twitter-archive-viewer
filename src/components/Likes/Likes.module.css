@@ -1,0 +1,40 @@
+.searchField {
+  background-color: var(--inputBackground);
+  border: 2px solid transparent;
+  border-radius: 40px;
+  height: 40px;
+  color: var(--color);
+  padding: 0 20px 0 35px;
+  margin: 0;
+  width: 100%;
+}
+
+.searchField:focus {
+  border: 2px solid var(--accentColor);
+  outline: none;
+}
+
+.searchContainer {
+  padding: 15px 15px 15px 15px;
+  border-top: 1px solid var(--borderColor);
+  border-bottom: 1px solid var(--borderColor);
+}
+
+.searchWrapper {
+  position: relative;
+}
+
+.searchIconContainer {
+  color: var(--dimmedColor);
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  width: 20px;
+  height: 20px;
+}
+
+.searchIcon {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}

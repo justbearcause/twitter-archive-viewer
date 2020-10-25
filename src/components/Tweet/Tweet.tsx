@@ -1,9 +1,11 @@
+import classNames from "classnames";
 import Image from "components/Image";
 import { TweetHashtagModel, TweetModel, TweetUserMentionModel } from "models";
 import Moment from "moment";
 import React from "react";
-import { connect } from "react-redux";
-import { AppState } from "store";
+import { connect, ConnectedProps } from "react-redux";
+import { AppDispatch, AppState } from "store";
+import { showModal } from "store/archive";
 import Media from "../Media";
 import styles from "./Tweet.module.css";
 
@@ -11,14 +13,24 @@ type OwnProps = {
   tweet: TweetModel;
 };
 
-type Props = OwnProps & ReturnType<typeof mapStateToProps>;
+type Props = OwnProps & ConnectedProps<typeof connector>;
 
 const Tweet: React.FunctionComponent<Props> = (props) => {
   const { tweet, user } = props;
 
-  if (!tweet) {
-    return null;
-  }
+  const onPreviewToggle = () => {
+    props.onModalOpen(renderIframe());
+  };
+
+  const renderIframe = () => {
+    return (
+      <iframe
+        title={tweet.id}
+        frameBorder="0"
+        src={`https://platform.twitter.com/embed/index.html?dnt=true&frame=false&hideThread=false&id=${tweet.id}`}
+      ></iframe>
+    );
+  };
 
   const statusUrl = `https://twitter.com/${user.username}/status/${tweet.id}`;
   const authorUrl = `https://twitter.com/${user.username}`;
@@ -45,25 +57,43 @@ const Tweet: React.FunctionComponent<Props> = (props) => {
         </a>
       </div>
       <div className={styles.contentColumn}>
-        <div className={styles.authorInfo}>
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href={authorUrl}
-            className={styles.dimmed}
-          >
-            <span className={styles.authorName}>{user.accountDisplayName}</span>
-            <span className={styles.authorUsername}>@{user.username}</span>
-          </a>
-          <a
-            className={styles.dimmed}
-            target="_blank"
-            rel="noopener noreferrer"
-            href={statusUrl}
-            title={createdAtTime}
-          >
-            {createdAtDate}
-          </a>
+        <div className={styles.tweetInfo}>
+          <div className={styles.authorInfo}>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={authorUrl}
+              className={classNames(styles.dimmed, styles.tweetAction)}
+            >
+              <span className={styles.authorName}>
+                {user.accountDisplayName}
+              </span>
+              <span className={styles.authorUsername}>@{user.username}</span>
+            </a>
+            <span className={classNames(styles.dimmed, styles.tweetAction)}>
+              {createdAtDate}
+            </span>
+          </div>
+          <div className={styles.tweetActions}>
+            <a
+              className={classNames(styles.dimmed, styles.tweetAction)}
+              target="_blank"
+              rel="noopener noreferrer"
+              href={statusUrl}
+            >
+              Open on Twitter
+            </a>
+            <input
+              type="button"
+              value="Show preview"
+              className={classNames(
+                styles.linkButton,
+                styles.dimmed,
+                styles.tweetAction
+              )}
+              onClick={onPreviewToggle}
+            />
+          </div>
         </div>
         <div className={styles.tweetText}>{prepareTweetText(tweet)}</div>
         {hasMedia && (
@@ -195,4 +225,12 @@ const mapStateToProps = (state: AppState) => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps)(Tweet);
+const mapDispatch = (dispatch: AppDispatch) => ({
+  onModalOpen: (content: JSX.Element) => {
+    dispatch(showModal(content));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatch);
+
+export default connector(Tweet);
