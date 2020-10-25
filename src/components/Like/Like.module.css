@@ -75,3 +75,8 @@
 .dimmed:active {
   color: var(--dimmedColor);
 }
+
+.likeIcon {
+  fill: currentColor;
+  color: rgb(224, 36, 94);
+}

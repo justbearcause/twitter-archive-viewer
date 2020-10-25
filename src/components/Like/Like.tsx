@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { LikeIcon } from "components/Icons";
 import LikeModel from "models/LikeModel";
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
@@ -31,10 +32,22 @@ const Like: React.FunctionComponent<Props> = (props) => {
 
   return (
     <div className={styles.tweet}>
-      <div className={styles.avatarColumn}></div>
+      <div className={styles.avatarColumn}>
+        <LikeIcon className={styles.likeIcon} />
+      </div>
       <div className={styles.contentColumn}>
         <div className={styles.tweetInfo}>
-          <div className={styles.authorInfo}></div>
+          <div className={styles.authorInfo}>
+            <span
+              className={classNames(
+                styles.dimmed,
+                styles.tweetAction,
+                styles.authorName
+              )}
+            >
+              Liked tweet
+            </span>
+          </div>
           <div className={styles.tweetActions}>
             <a
               className={classNames(styles.dimmed, styles.tweetAction)}
