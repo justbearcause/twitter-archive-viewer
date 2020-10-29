@@ -2,11 +2,14 @@ import classNames from "classnames";
 import { RetweetIcon } from "components/Icons";
 import Image from "components/Image";
 import { TweetHashtagModel, TweetModel, TweetUserMentionModel } from "models";
-import Moment from "moment";
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { AppDispatch, AppState } from "store";
 import { showModal } from "store/archive";
+import {
+  twitterDateTimeStringToNormalDateString,
+  twitterDateTimeStringToNormalTimeString,
+} from "utils/dateTimeUtils";
 import Media from "../Media";
 import styles from "./Tweet.module.css";
 
@@ -37,10 +40,10 @@ const Tweet: React.FunctionComponent<Props> = (props) => {
 
   const hasMedia = !!tweet.extended_entities && !!tweet.extended_entities.media;
 
-  const createdAtDate = _twitterDateTimeStringToNormalDateString(
+  const createdAtDate = twitterDateTimeStringToNormalDateString(
     tweet.created_at
   );
-  const createdAtTime = _twitterDateTimeStringToNormalTimeString(
+  const createdAtTime = twitterDateTimeStringToNormalTimeString(
     tweet.created_at
   );
 
@@ -234,14 +237,6 @@ const prepareTweetText = (tweet: TweetModel) => {
 
   return <React.Fragment>{parts}</React.Fragment>;
 };
-
-const _twitterDateTimeStringToNormalDateString = (twitterDateString: string) =>
-  Moment(twitterDateString, "dd MMM DD HH:mm:ss ZZ YYYY", "en").format(
-    "MMM DD YYYY"
-  );
-
-const _twitterDateTimeStringToNormalTimeString = (twitterDateString: string) =>
-  Moment(twitterDateString, "dd MMM DD HH:mm:ss ZZ YYYY", "en").format("HH:mm");
 
 const mapStateToProps = (state: AppState) => ({
   user: state.user,
