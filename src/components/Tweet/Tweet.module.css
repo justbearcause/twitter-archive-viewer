@@ -16,7 +16,8 @@
 }
 
 .tweetActions {
-  flex: 0 1 auto;
+  display: flex;
+  margin-top: 10px;
 }
 
 .authorName {

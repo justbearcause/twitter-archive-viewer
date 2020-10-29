@@ -99,26 +99,6 @@ const Tweet: React.FunctionComponent<Props> = (props) => {
               {createdAtDate}
             </span>
           </div>
-          <div className={styles.tweetActions}>
-            <a
-              className={classNames(styles.dimmed, styles.tweetAction)}
-              target="_blank"
-              rel="noopener noreferrer"
-              href={statusUrl}
-            >
-              Open on Twitter
-            </a>
-            <input
-              type="button"
-              value="Show preview"
-              className={classNames(
-                styles.linkButton,
-                styles.dimmed,
-                styles.tweetAction
-              )}
-              onClick={onPreviewToggle}
-            />
-          </div>
         </div>
         <div className={styles.tweetText}>{prepareTweetText(tweet)}</div>
         {hasMedia && (
@@ -128,6 +108,26 @@ const Tweet: React.FunctionComponent<Props> = (props) => {
             ))}
           </div>
         )}
+        <div className={styles.tweetActions}>
+          <a
+            className={classNames(styles.dimmed, styles.tweetAction)}
+            target="_blank"
+            rel="noopener noreferrer"
+            href={statusUrl}
+          >
+            View on Twitter
+          </a>
+          <input
+            type="button"
+            value="Preview"
+            className={classNames(
+              styles.linkButton,
+              styles.dimmed,
+              styles.tweetAction
+            )}
+            onClick={onPreviewToggle}
+          />
+        </div>
       </div>
     </div>
   );

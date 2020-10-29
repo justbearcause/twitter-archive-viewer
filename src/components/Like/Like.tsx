@@ -48,28 +48,28 @@ const Like: React.FunctionComponent<Props> = (props) => {
               Liked tweet
             </span>
           </div>
-          <div className={styles.tweetActions}>
-            <a
-              className={classNames(styles.dimmed, styles.tweetAction)}
-              target="_blank"
-              rel="noopener noreferrer"
-              href={like.expandedUrl}
-            >
-              Open on Twitter
-            </a>
-            <input
-              type="button"
-              value="Show preview"
-              className={classNames(
-                styles.linkButton,
-                styles.dimmed,
-                styles.tweetAction
-              )}
-              onClick={onPreviewToggle}
-            />
-          </div>
         </div>
         <div className={styles.tweetText}>{like.fullText}</div>
+        <div className={styles.tweetActions}>
+          <a
+            className={classNames(styles.dimmed, styles.tweetAction)}
+            target="_blank"
+            rel="noopener noreferrer"
+            href={like.expandedUrl}
+          >
+            View on Twitter
+          </a>
+          <input
+            type="button"
+            value="Preview"
+            className={classNames(
+              styles.linkButton,
+              styles.dimmed,
+              styles.tweetAction
+            )}
+            onClick={onPreviewToggle}
+          />
+        </div>
       </div>
     </div>
   );
