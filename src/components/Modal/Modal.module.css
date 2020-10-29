@@ -1,0 +1,29 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.modal {
+  max-width: min(550px, 80vw);
+  max-height: 80vh;
+  min-height: 50vh;
+  min-width: min(550px, 80vw);
+  cursor: default;
+}
+
+.modal > * {
+  max-width: min(550px, 80vw);
+  max-height: 80vh;
+  min-height: 80vh;
+  min-width: min(550px, 80vw);
+}

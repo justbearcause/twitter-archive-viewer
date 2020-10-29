@@ -1,0 +1,27 @@
+.navigation {
+  height: 53px;
+  display: flex;
+}
+
+.item {
+  padding: 15px;
+  flex: 0 1 auto;
+  font-weight: 700;
+  border-bottom: 2px solid transparent;
+}
+
+.item,
+.item:hover,
+.item:visited {
+  color: rgb(136, 153, 166);
+  text-decoration: none;
+}
+
+.item:global(.active) {
+  color: var(--accentColor);
+  border-bottom-color: var(--accentColor);
+}
+
+.item:hover {
+  background-color: rgba(29, 161, 242, 0.1);
+}

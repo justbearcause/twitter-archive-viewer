@@ -1,28 +1,19 @@
+import Modal from "components/Modal";
+import Navigation from "components/Navigation";
+import Router from "components/Router";
 import React, { FunctionComponent } from "react";
-import { connect } from "react-redux";
-import { RootState } from "../../store";
-import Layout from "../layout/layout";
-import Profile from "../profile/profile";
-import Tweets from "../tweets/tweets";
+import Layout from "../Layout";
+import Profile from "../Profile";
 
-type Props = ReturnType<typeof mapStateToProps>;
-
-const Home: FunctionComponent<Props> = props => {
-  if (!props.account || !props.profile) {
-    return null;
-  }
-
+const Home: FunctionComponent = () => {
   return (
     <Layout>
+      <Modal />
       <Profile />
-      <Tweets />
+      <Navigation />
+      <Router />
     </Layout>
   );
 };
 
-const mapStateToProps = (state: RootState) => ({
-  account: state.archive.account,
-  profile: state.archive.profile
-});
-
-export default connect(mapStateToProps)(Home);
+export default Home;
