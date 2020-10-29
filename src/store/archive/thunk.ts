@@ -1,6 +1,7 @@
 import { TweetModel } from "models";
 import { AppThunkDispatch, AppThunkResult } from "store";
 import { addImage } from "store/images";
+import { twitterDateTimeStringToMoment } from "utils/dateTimeUtils";
 import { setTweets } from "./actions";
 
 export const setTweetsThunk = (tweets: TweetModel[]): AppThunkResult => async (
@@ -23,5 +24,12 @@ export const setTweetsThunk = (tweets: TweetModel[]): AppThunkResult => async (
     });
   });
 
-  dispatch(setTweets(tweets));
+  const orderedTweets = tweets.sort((a, b) =>
+    twitterDateTimeStringToMoment(b.created_at).diff(
+      twitterDateTimeStringToMoment(a.created_at),
+      "s"
+    )
+  );
+
+  dispatch(setTweets(orderedTweets));
 };
