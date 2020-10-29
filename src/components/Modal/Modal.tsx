@@ -11,8 +11,16 @@ const Modal: React.FunctionComponent<Props> = (props) => {
     return null;
   }
 
+  const onModalClose = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    if (event.target != event.currentTarget) return;
+
+    props.onModalClose();
+  };
+
   return (
-    <div className={styles.backdrop} onClick={props.onModalClose}>
+    <div className={styles.backdrop} onClick={onModalClose}>
       <div className={styles.modal}>{props.content}</div>
     </div>
   );
