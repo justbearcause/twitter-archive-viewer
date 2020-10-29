@@ -14,7 +14,7 @@ const Modal: React.FunctionComponent<Props> = (props) => {
   const onModalClose = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    if (event.target != event.currentTarget) return;
+    if (event.target !== event.currentTarget) return;
 
     props.onModalClose();
   };
