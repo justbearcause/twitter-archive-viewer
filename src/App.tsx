@@ -1,14 +1,14 @@
 import React from "react";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import ArchiveLoader from "./components/ArchiveLoader";
 import Home from "./components/Home";
 
 function App() {
   return (
     <ArchiveLoader>
-      <BrowserRouter>
+      <HashRouter>
         <Home />
-      </BrowserRouter>
+      </HashRouter>
     </ArchiveLoader>
   );
 }
