@@ -1,11 +1,14 @@
 import React from "react";
-import ArchiveLoader from "./components/ArchiveLoader/ArchiveLoader";
-import Home from "./components/Home/Home";
+import { BrowserRouter } from "react-router-dom";
+import ArchiveLoader from "./components/ArchiveLoader";
+import Home from "./components/Home";
 
 function App() {
   return (
     <ArchiveLoader>
-      <Home />
+      <BrowserRouter>
+        <Home />
+      </BrowserRouter>
     </ArchiveLoader>
   );
 }

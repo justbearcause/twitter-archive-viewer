@@ -1,0 +1,45 @@
+.profileBackgroundContainer {
+  height: 200px;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.profileBackground {
+  object-fit: cover;
+  height: 200px;
+  width: 100%;
+}
+
+.profileInfoContainer {
+  padding: 10px 15px 15px 15px;
+}
+
+.profileAvatarContainer {
+  border: 4px solid var(--background);
+  border-radius: 50%;
+  margin-top: -18%;
+  display: inline-block;
+  font-size: 0;
+}
+
+.profileAvatar {
+  width: 134px;
+  height: 134px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profileDisplayName {
+  color: var(--color);
+  font-weight: bolder;
+  font-size: 19px;
+}
+
+.profileUserName {
+  color: var(--dimmedColor);
+}
+
+.profileAttributesRow {
+  margin: 10px 0;
+}

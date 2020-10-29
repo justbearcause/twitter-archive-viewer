@@ -1,0 +1,82 @@
+.tweet {
+  margin: 0;
+  padding: 15px;
+  border-bottom: 1px solid var(--borderColor);
+  display: flex;
+}
+
+.tweetInfo {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.authorInfo {
+  flex: 1 1 auto;
+}
+
+.tweetActions {
+  flex: 0 1 auto;
+}
+
+.authorName {
+  color: var(--color);
+  font-weight: 700;
+  margin-right: 10px;
+}
+
+.tweetText {
+  white-space: pre-line;
+}
+
+.attachments {
+  margin-top: 10px;
+}
+
+.avatarColumn {
+  width: 48px;
+  flex: 0 0 48px;
+  overflow: hidden;
+}
+
+.avatarImage {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.contentColumn {
+  flex: 1;
+  padding-left: 15px;
+}
+
+.linkButton {
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  font-size: inherit;
+}
+
+.linkButton:hover {
+  text-decoration: underline;
+}
+
+.tweetAction {
+  margin-left: 10px;
+}
+
+.tweetAction:first-child {
+  margin-left: 0;
+}
+
+.dimmed,
+.dimmed:hover,
+.dimmed:visited,
+.dimmed:active {
+  color: var(--dimmedColor);
+}
+
+.retweetIcon {
+  fill: currentColor;
+  color: rgb(23, 191, 99);
+}

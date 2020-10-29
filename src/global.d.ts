@@ -1,7 +1,7 @@
-import YTD from "./models/twitter/YTD/ytd";
+import { YtdModel } from "./models";
 
 declare global {
   interface Window {
-    YTD: YTD;
+    YTD: YtdModel;
   }
 }
