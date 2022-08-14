@@ -1,17 +1,24 @@
-import Image from "components/Image";
+import { Image } from "components/Image";
 import Moment from "moment";
 import React, { FunctionComponent } from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { AppState } from "store";
 import { BirthdayIcon, CalendarIcon, MapPinIcon } from "../Icons";
-import ProfileAttribute from "../ProfileAttribute";
-import ProfileCounter from "../ProfileCounter";
+import { ProfileAttribute } from "../ProfileAttribute";
+import { ProfileCounter } from "../ProfileCounter";
 import styles from "./Profile.module.css";
 
-type Props = ReturnType<typeof mapStateToProps>;
-
-const Profile: FunctionComponent<Props> = (props) => {
-  const { user, followersCount, followingsCount, tweetsCount } = props;
+export const Profile: FunctionComponent = () => {
+  const user = useSelector((state: AppState) => state.user);
+  const followersCount = useSelector(
+    (state: AppState) => state.archive.followers.length
+  );
+  const followingsCount = useSelector(
+    (state: AppState) => state.archive.followings.length
+  );
+  const tweetsCount = useSelector(
+    (state: AppState) => state.archive.tweets.length
+  );
 
   return (
     <div>
@@ -70,12 +77,3 @@ const Profile: FunctionComponent<Props> = (props) => {
     </div>
   );
 };
-
-const mapStateToProps = (state: AppState) => ({
-  user: state.user,
-  followersCount: state.archive.followers.length,
-  followingsCount: state.archive.followings.length,
-  tweetsCount: state.archive.tweets.length,
-});
-
-export default connect(mapStateToProps)(Profile);

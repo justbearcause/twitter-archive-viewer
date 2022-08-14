@@ -6,7 +6,7 @@ interface Props {
   text: string;
 }
 
-const ProfileAttribute: React.FunctionComponent<Props> = (props) => {
+export const ProfileAttribute: React.FunctionComponent<Props> = (props) => {
   return (
     <div className={styles.profileAttribute}>
       <div className={styles.profileAttributeIcon}>{props.icon}</div>
@@ -14,5 +14,3 @@ const ProfileAttribute: React.FunctionComponent<Props> = (props) => {
     </div>
   );
 };
-
-export default ProfileAttribute;

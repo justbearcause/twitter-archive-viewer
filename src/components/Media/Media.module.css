@@ -5,6 +5,10 @@
   border-radius: 5px;
 }
 
+.fullMedia {
+  border-radius: 5px;
+}
+
 .mediaContainer {
   margin-top: 10px;
   cursor: pointer;

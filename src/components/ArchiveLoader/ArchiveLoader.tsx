@@ -1,30 +1,22 @@
 import React, { FunctionComponent, useEffect } from "react";
-import { connect } from "react-redux";
-import { AppDispatch } from "store";
+import { useDispatch } from "react-redux";
 import { setFollowers, setFollowings, setTweetsThunk } from "store/archive";
 import { setLikes } from "store/likes";
 import { setUserThunk } from "store/user";
 
-type Props = ReturnType<typeof mapDispatch>;
+export const ArchiveLoader: FunctionComponent = ({ children }) => {
+  const dispatch = useDispatch();
 
-const ArchiveLoader: FunctionComponent<Props> = (props) => {
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(props.loadData, []);
-
-  return <>{props.children}</>;
-};
-
-const mapDispatch = (dispatch: AppDispatch) => ({
-  loadData: () => {
+  useEffect(() => {
     dispatch(setTweetsThunk(getTweets()));
     dispatch(setFollowers(getFollowers()));
     dispatch(setFollowings(getFollowings()));
     dispatch(setUserThunk(getProfile(), getAccount(), getAgeInfo()));
     dispatch(setLikes(getLikes()));
-  },
-});
+  }, [dispatch]);
 
-export default connect(null, mapDispatch)(ArchiveLoader);
+  return <>{children}</>;
+};
 
 const getTweets = () => {
   return window.YTD.tweet?.part0?.map((x) => x.tweet);

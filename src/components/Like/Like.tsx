@@ -1,33 +1,26 @@
 import classNames from "classnames";
 import { LikeIcon } from "components/Icons";
 import LikeModel from "models/LikeModel";
-import React from "react";
-import { connect, ConnectedProps } from "react-redux";
-import { AppDispatch } from "store";
-import { showModal } from "store/archive";
+import React, { useState } from "react";
+import { TwitterTweetEmbed } from "react-twitter-embed";
 import styles from "./Like.module.css";
 
-type OwnProps = {
+type Props = {
   like: LikeModel;
 };
 
-type Props = OwnProps & ConnectedProps<typeof connector>;
+type PreviewState = "hidden" | "requested" | "loaded" | "errored";
 
-const Like: React.FunctionComponent<Props> = (props) => {
+export const Like: React.FunctionComponent<Props> = (props) => {
   const { like } = props;
+  const [previewState, setPreviewState] = useState<PreviewState>("hidden");
 
-  const onPreviewToggle = () => {
-    props.onModalOpen(renderIframe());
+  const handlePreviewToggle = () => {
+    setPreviewState((state) => (state === "hidden" ? "requested" : "hidden"));
   };
 
-  const renderIframe = () => {
-    return (
-      <iframe
-        title={like.tweetId}
-        frameBorder="0"
-        src={`https://platform.twitter.com/embed/index.html?dnt=true&frame=false&hideThread=false&id=${like.tweetId}`}
-      ></iframe>
-    );
+  const handlePreviewLoad = (element: any) => {
+    setPreviewState(element ? "loaded" : "errored");
   };
 
   return (
@@ -38,13 +31,7 @@ const Like: React.FunctionComponent<Props> = (props) => {
       <div className={styles.contentColumn}>
         <div className={styles.tweetInfo}>
           <div className={styles.authorInfo}>
-            <span
-              className={classNames(
-                styles.dimmed,
-                styles.tweetAction,
-                styles.authorName
-              )}
-            >
+            <span className={classNames(styles.dimmed, styles.authorName)}>
               Liked tweet
             </span>
           </div>
@@ -52,35 +39,46 @@ const Like: React.FunctionComponent<Props> = (props) => {
         <div className={styles.tweetText}>{like.fullText}</div>
         <div className={styles.tweetActions}>
           <a
-            className={classNames(styles.dimmed, styles.tweetAction)}
+            className={classNames(styles.dimmed)}
             target="_blank"
             rel="noopener noreferrer"
             href={like.expandedUrl}
           >
             View on Twitter
           </a>
-          <input
+          <button
             type="button"
-            value="Preview"
-            className={classNames(
-              styles.linkButton,
-              styles.dimmed,
-              styles.tweetAction
-            )}
-            onClick={onPreviewToggle}
-          />
+            className={classNames(styles.linkButton, styles.dimmed)}
+            onClick={handlePreviewToggle}
+          >
+            {previewState === "hidden" ? "Show a preview" : "Hide a preview"}
+          </button>
         </div>
+        {(previewState === "requested" || previewState === "loaded") && (
+          <div
+            className={classNames({
+              [styles.embedHidden]: previewState === "requested",
+            })}
+          >
+            <TwitterTweetEmbed
+              tweetId={like.tweetId}
+              onLoad={handlePreviewLoad}
+            />
+          </div>
+        )}
+        {previewState === "requested" && (
+          <div className={styles.embedPlaceholder}>
+            Loading an embedded tweet...
+          </div>
+        )}
+        {previewState === "errored" && (
+          <div className={styles.embedError}>
+            Error loading an embedded tweet.
+            <br />
+            It may be deleted or author made their account private.
+          </div>
+        )}
       </div>
     </div>
   );
 };
-
-const mapDispatch = (dispatch: AppDispatch) => ({
-  onModalOpen: (content: JSX.Element) => {
-    dispatch(showModal(content));
-  },
-});
-
-const connector = connect(null, mapDispatch);
-
-export default connector(Like);

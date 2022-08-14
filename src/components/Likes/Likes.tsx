@@ -1,4 +1,4 @@
-import Like from "components/Like";
+import { Like } from "components/Like";
 import React, {
   FunctionComponent,
   useCallback,
@@ -6,22 +6,21 @@ import React, {
   useState,
 } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { AppState } from "store";
 import { SearchIcon } from "../Icons";
 import styles from "./Likes.module.css";
 
-type Props = ReturnType<typeof mapStateToProps>;
-
-const Likes: FunctionComponent<Props> = (props) => {
+export const Likes: FunctionComponent = () => {
+  const likes = useSelector((state: AppState) => state.likes.likes);
   const [filter, setFilter] = useState("");
 
   const filterDataSource = useCallback(
     () =>
       filter
-        ? props.likes.filter((like) => like.fullText.indexOf(filter) >= 0)
-        : props.likes,
-    [props.likes, filter]
+        ? likes.filter((like) => like.fullText.indexOf(filter) >= 0)
+        : likes,
+    [likes, filter]
   );
 
   const [filteredTweets, setFilteredTweets] = useState(filterDataSource());
@@ -95,9 +94,3 @@ const Likes: FunctionComponent<Props> = (props) => {
     </>
   );
 };
-
-const mapStateToProps = (state: AppState) => ({
-  likes: state.likes.likes,
-});
-
-export default connect(mapStateToProps)(Likes);

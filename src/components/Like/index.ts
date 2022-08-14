@@ -1,3 +1,1 @@
-import Like from "./Like";
-
-export default Like;
+export { Like } from "./Like";

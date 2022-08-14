@@ -1,3 +1,1 @@
-import ProfileAttribute from "./ProfileAttribute";
-
-export default ProfileAttribute;
+export { ProfileAttribute } from "./ProfileAttribute";

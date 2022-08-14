@@ -1,79 +1,53 @@
 import classNames from "classnames";
 import { RetweetIcon } from "components/Icons";
-import Image from "components/Image";
-import { TweetHashtagModel, TweetModel, TweetUserMentionModel } from "models";
-import React from "react";
-import { connect, ConnectedProps } from "react-redux";
-import { AppDispatch, AppState } from "store";
-import { showModal } from "store/archive";
-import {
-  twitterDateTimeStringToNormalDateString,
-  twitterDateTimeStringToNormalTimeString,
-} from "utils/dateTimeUtils";
-import Media from "../Media";
+import { Image } from "components/Image";
+import { TweetModel } from "models";
+import React, { useState } from "react";
+import { TwitterTweetEmbed } from "react-twitter-embed";
+import { Media } from "../Media";
 import styles from "./Tweet.module.css";
+import { useTweet } from "./useTweet";
 
-type OwnProps = {
+type Props = {
   tweet: TweetModel;
 };
 
-type Props = OwnProps & ConnectedProps<typeof connector>;
+type PreviewState = "hidden" | "requested" | "loaded" | "errored";
 
-const Tweet: React.FunctionComponent<Props> = (props) => {
-  const { tweet, user } = props;
+export const Tweet: React.FunctionComponent<Props> = ({ tweet }) => {
+  const [previewState, setPreviewState] = useState<PreviewState>("hidden");
 
-  const onPreviewToggle = () => {
-    props.onModalOpen(renderIframe());
+  const {
+    authorDisplayName,
+    authorUrl,
+    authorUserName,
+    avatarImageId,
+    createdAtDate,
+    createdAtTime,
+    hasMedia,
+    isRetweet,
+    statusUrl,
+    tweetText,
+  } = useTweet(tweet);
+
+  const handlePreviewToggle = () => {
+    setPreviewState((state) => (state === "hidden" ? "requested" : "hidden"));
   };
 
-  const renderIframe = () => {
-    return (
-      <iframe
-        title={tweet.id}
-        frameBorder="0"
-        src={`https://platform.twitter.com/embed/index.html?dnt=true&frame=false&hideThread=false&id=${tweet.id}`}
-      ></iframe>
-    );
+  const handlePreviewLoad = (element: any) => {
+    setPreviewState(element ? "loaded" : "errored");
   };
-
-  const statusUrl = `https://twitter.com/${user.username}/status/${tweet.id}`;
-
-  const hasMedia = !!tweet.extended_entities && !!tweet.extended_entities.media;
-
-  const createdAtDate = twitterDateTimeStringToNormalDateString(
-    tweet.created_at
-  );
-  const createdAtTime = twitterDateTimeStringToNormalTimeString(
-    tweet.created_at
-  );
-
-  let isRetweet = false;
-  let originalAuthor = user.username;
-
-  const retweetRegexp = /^RT @([^:]+)/i;
-  const retweetMatch = tweet.full_text.match(retweetRegexp);
-  console.log(tweet.full_text, retweetMatch);
-  if (retweetMatch && retweetMatch.length >= 2 && retweetMatch[1]) {
-    isRetweet = true;
-    originalAuthor = retweetMatch[1];
-  }
-
-  const authorUrl = `https://twitter.com/${
-    !isRetweet ? user.username : originalAuthor
-  }`;
-
-  const authorDisplayName = !isRetweet ? user.accountDisplayName : "Retweet";
 
   return (
     <div className={styles.tweet}>
       <div className={styles.avatarColumn}>
         {!isRetweet && (
           <a target="_blank" rel="noopener noreferrer" href={authorUrl}>
-            {!!user.avatarMediaImageId && (
+            {!!avatarImageId && (
               <Image
                 className={styles.avatarImage}
-                id={user.avatarMediaImageId}
-                alt={user.accountDisplayName || ""}
+                id={avatarImageId}
+                alt={authorDisplayName || authorUserName || ""}
               />
             )}
           </a>
@@ -87,22 +61,19 @@ const Tweet: React.FunctionComponent<Props> = (props) => {
               target="_blank"
               rel="noopener noreferrer"
               href={authorUrl}
-              className={classNames(styles.dimmed, styles.tweetAction)}
+              className={styles.dimmed}
             >
               <span className={styles.authorName}>{authorDisplayName}</span>
-              <span className={styles.authorUsername}>@{originalAuthor}</span>
+              <span className={styles.authorUsername}>@{authorUserName}</span>
             </a>
-            <span
-              className={classNames(styles.dimmed, styles.tweetAction)}
-              title={createdAtTime}
-            >
+            <span className={styles.dimmed} title={createdAtTime}>
               {createdAtDate}
             </span>
           </div>
         </div>
-        <div className={styles.tweetText}>{prepareTweetText(tweet)}</div>
+        <div className={styles.tweetText}>{tweetText}</div>
         {hasMedia && (
-          <div className={styles.attachments}>
+          <div>
             {tweet.extended_entities!.media.map((media) => (
               <Media key={media.id} media={media} />
             ))}
@@ -110,144 +81,44 @@ const Tweet: React.FunctionComponent<Props> = (props) => {
         )}
         <div className={styles.tweetActions}>
           <a
-            className={classNames(styles.dimmed, styles.tweetAction)}
+            className={styles.dimmed}
             target="_blank"
             rel="noopener noreferrer"
             href={statusUrl}
           >
             View on Twitter
           </a>
-          <input
+          <button
             type="button"
-            value="Preview"
-            className={classNames(
-              styles.linkButton,
-              styles.dimmed,
-              styles.tweetAction
-            )}
-            onClick={onPreviewToggle}
-          />
+            className={classNames(styles.linkButton, styles.dimmed)}
+            onClick={handlePreviewToggle}
+          >
+            {previewState === "hidden" ? "Show a preview" : "Hide a preview"}
+          </button>
         </div>
+
+        {(previewState === "requested" || previewState === "loaded") && (
+          <div
+            className={classNames({
+              [styles.embedHidden]: previewState === "requested",
+            })}
+          >
+            <TwitterTweetEmbed tweetId={tweet.id} onLoad={handlePreviewLoad} />
+          </div>
+        )}
+        {previewState === "requested" && (
+          <div className={styles.embedPlaceholder}>
+            Loading an embedded tweet...
+          </div>
+        )}
+        {previewState === "errored" && (
+          <div className={styles.embedError}>
+            Error loading an embedded tweet.
+            <br />
+            It may be deleted or author made their account private.
+          </div>
+        )}
       </div>
     </div>
   );
 };
-
-const decodeHtmlEntities = (string: string) => {
-  var textArea = document.createElement("textarea");
-  textArea.innerHTML = string;
-  return textArea.value;
-};
-
-const prepareTweetText = (tweet: TweetModel) => {
-  const text = decodeHtmlEntities(tweet.full_text);
-  const replaces: any[] = [];
-
-  tweet.entities.hashtags.forEach((hashtag: TweetHashtagModel) => {
-    const url = `https://twitter.com/hashtag/${hashtag.text}`;
-    const key = hashtag.indices[0];
-
-    replaces.push({
-      from: +hashtag.indices[0],
-      to: +hashtag.indices[1],
-      content: (
-        <a target="_blank" rel="noopener noreferrer" key={key} href={url}>
-          #{hashtag.text}
-        </a>
-      ),
-    });
-  });
-
-  tweet.entities.user_mentions.forEach((mention: TweetUserMentionModel) => {
-    const url = `https://twitter.com/${mention.screen_name}`;
-    const key = mention.indices[0];
-
-    replaces.push({
-      from: +mention.indices[0],
-      to: +mention.indices[1],
-      content: (
-        <a target="_blank" rel="noopener noreferrer" key={key} href={url}>
-          @{mention.screen_name}
-        </a>
-      ),
-    });
-  });
-
-  tweet.entities.urls.forEach((url) => {
-    const key = url.indices[0];
-
-    replaces.push({
-      from: +url.indices[0],
-      to: +url.indices[1],
-      content: (
-        <a target="_blank" rel="noopener noreferrer" key={key} href={url.url}>
-          {url.display_url}
-        </a>
-      ),
-    });
-  });
-
-  if (tweet.entities.media) {
-    tweet.entities.media.forEach((media) => {
-      const key = media.indices[0];
-
-      replaces.push({
-        from: +media.indices[0],
-        to: +media.indices[1],
-        content: (
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            key={key}
-            href={media.media_url}
-          >
-            {media.url}
-          </a>
-        ),
-      });
-    });
-  }
-
-  replaces.sort((a, b) => (a.from > b.from ? 1 : b.from > a.from ? -1 : 0));
-
-  const parts = [];
-
-  let currentIndex = 0;
-  replaces.forEach((replace: any) => {
-    if (replace.from !== currentIndex) {
-      parts.push(
-        <span key={currentIndex}>
-          {" " + text.substring(currentIndex, replace.from) + " "}
-        </span>
-      );
-    } else if (currentIndex > 0) {
-      parts.push(<span key={`${currentIndex}sep`}> </span>);
-    }
-
-    parts.push(replace.content);
-
-    currentIndex = replace.to + 1;
-  });
-
-  if (currentIndex < text.length - 1) {
-    parts.push(
-      <span key={currentIndex}>{" " + text.substring(currentIndex)}</span>
-    );
-  }
-
-  return <React.Fragment>{parts}</React.Fragment>;
-};
-
-const mapStateToProps = (state: AppState) => ({
-  user: state.user,
-});
-
-const mapDispatch = (dispatch: AppDispatch) => ({
-  onModalOpen: (content: JSX.Element) => {
-    dispatch(showModal(content));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatch);
-
-export default connector(Tweet);

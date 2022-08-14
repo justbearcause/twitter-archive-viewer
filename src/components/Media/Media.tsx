@@ -1,43 +1,32 @@
-import Image from "components/Image";
+import { Image } from "components/Image";
 import React from "react";
-import { connect, ConnectedProps } from "react-redux";
-import { AppDispatch } from "store";
+import { useDispatch } from "react-redux";
 import { showModal } from "store/archive";
 import { TweetMediaModel } from "../../models";
 import styles from "./Media.module.css";
 
-type OwnProps = {
+type Props = {
   media: TweetMediaModel;
 };
 
-type Props = OwnProps & ConnectedProps<typeof connector>;
+export const Media: React.FunctionComponent<Props> = ({ media }) => {
+  const dispatch = useDispatch();
 
-const Media: React.FunctionComponent<Props> = (props) => {
   const onImagePreviewToggle = () => {
-    props.onModalOpen(image);
+    dispatch(
+      showModal(
+        <Image
+          id={media.id}
+          alt={media.display_url}
+          className={styles.fullMedia}
+        />
+      )
+    );
   };
-
-  const image = (
-    <Image
-      id={props.media.id}
-      alt={props.media.display_url}
-      className={styles.media}
-    />
-  );
 
   return (
     <div className={styles.mediaContainer} onClick={onImagePreviewToggle}>
-      {image}
+      <Image id={media.id} alt={media.display_url} className={styles.media} />
     </div>
   );
 };
-
-const mapDispatch = (dispatch: AppDispatch) => ({
-  onModalOpen: (content: JSX.Element) => {
-    dispatch(showModal(content));
-  },
-});
-
-const connector = connect(null, mapDispatch);
-
-export default connector(Media);

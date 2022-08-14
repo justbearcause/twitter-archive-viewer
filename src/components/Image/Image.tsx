@@ -1,41 +1,38 @@
 import React from "react";
-import { connect, ConnectedProps } from "react-redux";
-import { AppDispatch, AppState } from "store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppState } from "store";
 import { nextImageSource } from "store/images";
 
-type OwnProps = {
+type Props = {
   id: string;
   className?: string;
   alt: string;
 };
 
-type Props = OwnProps & ConnectedProps<typeof connector>;
+export const Image: React.FunctionComponent<Props> = ({
+  id,
+  className,
+  alt,
+}) => {
+  const dispatch = useDispatch();
+  const image = useSelector((state: AppState) =>
+    id in state.images ? state.images[id] : undefined
+  );
 
-const Image: React.FunctionComponent<Props> = (props) => {
-  if (!props.image) {
+  const onError = () => {
+    dispatch(nextImageSource(id));
+  };
+
+  if (!image) {
     return null;
   }
 
   return (
     <img
-      className={props.className}
-      src={props.image.srcs[props.image.activeIndex]}
-      onError={props.onError}
-      alt={props.alt}
+      className={className}
+      src={image.srcs[image.activeIndex]}
+      onError={onError}
+      alt={alt}
     />
   );
 };
-
-const mapStateToProps = (state: AppState, ownProps: OwnProps) => ({
-  image: ownProps.id in state.images ? state.images[ownProps.id] : undefined,
-});
-
-const mapDispatch = (dispatch: AppDispatch, ownProps: OwnProps) => ({
-  onError: () => {
-    dispatch(nextImageSource(ownProps.id));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatch);
-
-export default connector(Image);

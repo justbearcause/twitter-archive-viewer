@@ -1,3 +1,1 @@
-import Tweets from "./Tweets";
-
-export default Tweets;
+export { Tweets } from "./Tweets";

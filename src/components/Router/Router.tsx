@@ -1,9 +1,9 @@
-import Likes from "components/Likes";
-import Tweets from "components/Tweets";
+import { Likes } from "components/Likes";
+import { Tweets } from "components/Tweets";
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 
-const Router: React.FunctionComponent = () => {
+export const Router: React.FunctionComponent = () => {
   return (
     <Switch>
       <Route path="/" exact>
@@ -18,5 +18,3 @@ const Router: React.FunctionComponent = () => {
     </Switch>
   );
 };
-
-export default Router;
