@@ -1,5 +1,5 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { archiveReducer } from "./archive";
 import { imageReducer } from "./images";
 import { likesReducer } from "./likes";
@@ -20,12 +20,13 @@ const appStore = configureStore({
 export { appStore };
 export type AppState = ReturnType<typeof appStore.getState>;
 export type AppDispatch = typeof appStore.dispatch;
-export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppDispatch: () => AppDispatch = useDispatch;
+export const useAppSelector: TypedUseSelectorHook<AppState> = useSelector;
 
 export type AppThunkResult<R = Promise<void>> = ThunkAction<
   R,
   AppState,
-  unknown,
+  undefined,
   Action<string>
 >;
 export type AppThunkDispatch = typeof appStore.dispatch;

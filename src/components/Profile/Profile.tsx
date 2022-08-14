@@ -1,22 +1,21 @@
 import { Image } from "components/Image";
 import Moment from "moment";
 import React, { FunctionComponent } from "react";
-import { useSelector } from "react-redux";
-import { AppState } from "store";
+import { AppState, useAppSelector } from "store";
 import { BirthdayIcon, CalendarIcon, MapPinIcon } from "../Icons";
 import { ProfileAttribute } from "../ProfileAttribute";
 import { ProfileCounter } from "../ProfileCounter";
 import styles from "./Profile.module.css";
 
 export const Profile: FunctionComponent = () => {
-  const user = useSelector((state: AppState) => state.user);
-  const followersCount = useSelector(
+  const user = useAppSelector((state: AppState) => state.user);
+  const followersCount = useAppSelector(
     (state: AppState) => state.archive.followers.length
   );
-  const followingsCount = useSelector(
+  const followingsCount = useAppSelector(
     (state: AppState) => state.archive.followings.length
   );
-  const tweetsCount = useSelector(
+  const tweetsCount = useAppSelector(
     (state: AppState) => state.archive.tweets.length
   );
 

@@ -1,11 +1,11 @@
-import React, { FunctionComponent, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React, { PropsWithChildren, useEffect } from "react";
+import { useAppDispatch } from "store";
 import { setFollowers, setFollowings, setTweetsThunk } from "store/archive";
 import { setLikes } from "store/likes";
 import { setUserThunk } from "store/user";
 
-export const ArchiveLoader: FunctionComponent = ({ children }) => {
-  const dispatch = useDispatch();
+export const ArchiveLoader = ({ children }: PropsWithChildren) => {
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(setTweetsThunk(getTweets()));

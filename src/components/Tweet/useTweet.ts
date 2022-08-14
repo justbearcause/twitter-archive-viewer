@@ -1,6 +1,5 @@
 import { TweetModel } from "models";
-import { useSelector } from "react-redux";
-import { AppState } from "store";
+import { AppState, useAppSelector } from "store";
 import {
   twitterDateTimeStringToNormalDateString,
   twitterDateTimeStringToNormalTimeString,
@@ -8,7 +7,7 @@ import {
 import { prepareTweetText } from "./utils";
 
 export const useTweet = (tweet: TweetModel) => {
-  const user = useSelector((state: AppState) => state.user);
+  const user = useAppSelector((state: AppState) => state.user);
 
   const statusUrl = `https://twitter.com/${user.username}/status/${tweet.id}`;
 
