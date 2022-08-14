@@ -1,6 +1,6 @@
 import { Image } from "components/Image";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "store";
 import { showModal } from "store/archive";
 import { TweetMediaModel } from "../../models";
 import styles from "./Media.module.css";
@@ -10,7 +10,7 @@ type Props = {
 };
 
 export const Media: React.FunctionComponent<Props> = ({ media }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onImagePreviewToggle = () => {
     dispatch(

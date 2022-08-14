@@ -6,13 +6,12 @@ import React, {
   useState,
 } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useSelector } from "react-redux";
-import { AppState } from "store";
+import { AppState, useAppSelector } from "store";
 import { SearchIcon } from "../Icons";
 import styles from "./Likes.module.css";
 
 export const Likes: FunctionComponent = () => {
-  const likes = useSelector((state: AppState) => state.likes.likes);
+  const likes = useAppSelector((state: AppState) => state.likes.likes);
   const [filter, setFilter] = useState("");
 
   const filterDataSource = useCallback(
@@ -45,10 +44,10 @@ export const Likes: FunctionComponent = () => {
     hasMoreItems: Math.min(filteredTweets.length, 20) < filteredTweets.length,
   });
 
-  useEffect(() => setFilteredTweets(filterDataSource()), [
-    filter,
-    filterDataSource,
-  ]);
+  useEffect(
+    () => setFilteredTweets(filterDataSource()),
+    [filter, filterDataSource]
+  );
 
   useEffect(() => {
     setState({ items: [], hasMoreItems: true });
