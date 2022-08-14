@@ -1,3 +1,1 @@
-import ProfileCounter from "./ProfileCounter";
-
-export default ProfileCounter;
+export { ProfileCounter } from "./ProfileCounter";

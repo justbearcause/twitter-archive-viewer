@@ -6,18 +6,19 @@
 }
 
 .tweetInfo {
-  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
 }
 
 .authorInfo {
   flex: 1 1 auto;
+  display: flex;
+  gap: 10px;
 }
 
 .tweetActions {
   display: flex;
-  margin-top: 10px;
+  gap: 10px;
 }
 
 .authorName {
@@ -28,10 +29,6 @@
 
 .tweetText {
   white-space: pre-line;
-}
-
-.attachments {
-  margin-top: 10px;
 }
 
 .avatarColumn {
@@ -49,6 +46,9 @@
 .contentColumn {
   flex: 1;
   padding-left: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .linkButton {
@@ -62,14 +62,6 @@
   text-decoration: underline;
 }
 
-.tweetAction {
-  margin-left: 10px;
-}
-
-.tweetAction:first-child {
-  margin-left: 0;
-}
-
 .dimmed,
 .dimmed:hover,
 .dimmed:visited,
@@ -80,4 +72,18 @@
 .likeIcon {
   fill: currentColor;
   color: rgb(224, 36, 94);
+}
+
+.embedPlaceholder {
+  color: var(--dimmedColor);
+  font-style: italic;
+}
+
+.embedError {
+  color: var(--color);
+}
+
+.embedHidden {
+  height: 0;
+  overflow: hidden;
 }

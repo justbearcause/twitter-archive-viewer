@@ -1,3 +1,1 @@
-import Tweet from "./Tweet";
-
-export default Tweet;
+export { Tweet } from "./Tweet";

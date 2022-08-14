@@ -1,13 +1,17 @@
 import React from "react";
-import { connect, ConnectedProps } from "react-redux";
-import { AppDispatch, AppState } from "store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppState } from "store";
 import { closeModal } from "store/archive";
 import styles from "./Modal.module.css";
 
-type Props = ConnectedProps<typeof connector>;
+export const Modal: React.FunctionComponent = () => {
+  const dispatch = useDispatch();
+  const isVisible = useSelector(
+    (state: AppState) => state.archive.isModalVisible
+  );
+  const content = useSelector((state: AppState) => state.archive.modalContent);
 
-const Modal: React.FunctionComponent<Props> = (props) => {
-  if (!props.isVisible) {
+  if (!isVisible) {
     return null;
   }
 
@@ -16,27 +20,12 @@ const Modal: React.FunctionComponent<Props> = (props) => {
   ) => {
     if (event.target !== event.currentTarget) return;
 
-    props.onModalClose();
+    dispatch(closeModal());
   };
 
   return (
     <div className={styles.backdrop} onClick={onModalClose}>
-      <div className={styles.modal}>{props.content}</div>
+      <div className={styles.modal}>{content}</div>
     </div>
   );
 };
-
-const mapStateToProps = (state: AppState) => ({
-  isVisible: state.archive.isModalVisible,
-  content: state.archive.modalContent,
-});
-
-const mapDispatch = (dispatch: AppDispatch) => ({
-  onModalClose: () => {
-    dispatch(closeModal());
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatch);
-
-export default connector(Modal);

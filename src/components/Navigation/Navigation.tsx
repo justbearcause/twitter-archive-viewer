@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./Navigation.module.css";
 
-const Navigation: React.FunctionComponent = () => {
+export const Navigation: React.FunctionComponent = () => {
   return (
     <div className={styles.navigation}>
       <NavLink to="/tweets" className={styles.item}>
@@ -14,5 +14,3 @@ const Navigation: React.FunctionComponent = () => {
     </div>
   );
 };
-
-export default Navigation;
