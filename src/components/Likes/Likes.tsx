@@ -1,20 +1,19 @@
 import { Like } from "components/Like";
-import React, {
-  FunctionComponent,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { Pagination } from "components/Pagination";
+import React, { FunctionComponent, useMemo, useRef, useState } from "react";
 import { AppState, useAppSelector } from "store";
 import { SearchIcon } from "../Icons";
 import styles from "./Likes.module.css";
 
-export const Likes: FunctionComponent = () => {
-  const likes = useAppSelector((state: AppState) => state.likes.likes);
-  const [filter, setFilter] = useState("");
+const PAGE_SIZE = 50;
 
-  const filterDataSource = useCallback(
+export const Likes: FunctionComponent = () => {
+  const topPaginationContainerRef = useRef<HTMLDivElement>(null);
+  const [filter, setFilter] = useState("");
+  const [page, setPage] = useState(0);
+  const likes = useAppSelector((state: AppState) => state.likes.likes);
+
+  const filterDataSource = useMemo(
     () =>
       filter
         ? likes.filter((like) => like.fullText.indexOf(filter) >= 0)
@@ -22,48 +21,37 @@ export const Likes: FunctionComponent = () => {
     [likes, filter]
   );
 
-  const [filteredTweets, setFilteredTweets] = useState(filterDataSource());
+  const pagesCount = Math.ceil(filterDataSource.length / PAGE_SIZE);
 
-  const fetchMoreListItems = useCallback(() => {
-    setState((prevState) => ({
-      items: [
-        ...prevState.items,
-        ...filteredTweets.slice(
-          prevState.items.length,
-          Math.min(filteredTweets.length, prevState.items.length + 20)
-        ),
-      ],
-      hasMoreItems:
-        Math.min(filteredTweets.length, prevState.items.length + 20) <
-        filteredTweets.length,
-    }));
-  }, [filteredTweets]);
-
-  const [state, setState] = useState({
-    items: filteredTweets.slice(0, Math.min(filteredTweets.length, 20)),
-    hasMoreItems: Math.min(filteredTweets.length, 20) < filteredTweets.length,
-  });
-
-  useEffect(
-    () => setFilteredTweets(filterDataSource()),
-    [filter, filterDataSource]
+  const likesSlice = useMemo(
+    () => filterDataSource.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE - 1),
+    [filterDataSource, page]
   );
 
-  useEffect(() => {
-    setState({ items: [], hasMoreItems: true });
-    fetchMoreListItems();
-  }, [filteredTweets, fetchMoreListItems]);
+  const handleTopPaginationChange = (newPage: number) => {
+    setPage(newPage);
+  };
 
-  const loadingMessage = <h4>Loading...</h4>;
-  const endMessage = (
-    <p style={{ textAlign: "center" }}>
-      <b>Yay! You have seen it all</b>
-    </p>
-  );
+  const handleBottomPaginationChange = (newPage: number) => {
+    setPage(newPage);
+
+    if (topPaginationContainerRef.current) {
+      window.scrollTo(0, topPaginationContainerRef.current.offsetTop);
+    }
+  };
 
   return (
     <>
-      <div className={styles.searchContainer}>
+      <div
+        ref={topPaginationContainerRef}
+        className={styles.searchAndPaginationContainer}
+      >
+        <Pagination
+          className={styles.topPagination}
+          currentPage={page}
+          pageCount={pagesCount}
+          onChange={handleTopPaginationChange}
+        />
         <div className={styles.searchWrapper}>
           <input
             type="text"
@@ -77,19 +65,19 @@ export const Likes: FunctionComponent = () => {
           </div>
         </div>
       </div>
-      <InfiniteScroll
-        dataLength={state.items.length} //This is important field to render the next data
-        next={fetchMoreListItems}
-        hasMore={state.hasMoreItems}
-        loader={loadingMessage}
-        endMessage={endMessage}
-      >
-        <div className={styles.tweets}>
-          {state.items.map((like) => (
-            <Like key={like.tweetId} like={like} />
-          ))}
-        </div>
-      </InfiniteScroll>
+      <div className={styles.tweets}>
+        {likesSlice.map((like) => (
+          <Like key={like.tweetId} like={like} />
+        ))}
+      </div>
+      <div className={styles.bottomPaginationContainer}>
+        <Pagination
+          className={styles.bottomPagination}
+          currentPage={page}
+          pageCount={pagesCount}
+          onChange={handleBottomPaginationChange}
+        />
+      </div>
     </>
   );
 };

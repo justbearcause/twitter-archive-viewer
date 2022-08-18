@@ -1,35 +1,41 @@
 import { TweetModel } from "models";
 import { AppThunkDispatch, AppThunkResult } from "store";
-import { addImage } from "store/images";
+import { addImages } from "store/images";
+import { Image } from "store/images/types";
 import { twitterDateTimeStringToMoment } from "utils/dateTimeUtils";
 import { setTweets } from "./actions";
 
-export const setTweetsThunk = (tweets: TweetModel[]): AppThunkResult => async (
-  dispatch: AppThunkDispatch
-) => {
-  tweets.forEach((tweet) => {
-    if (tweet.entities.media === undefined) {
-      return;
-    }
+export const setTweetsThunk =
+  (tweets: TweetModel[]): AppThunkResult =>
+  async (dispatch: AppThunkDispatch) => {
+    const images: Image[] = tweets
+      .flatMap((tweet) =>
+        (tweet.entities.media ?? []).map((media) => ({
+          media,
+          tweetId: tweet.id,
+        }))
+      )
+      .map(({ media, tweetId }): Image => {
+        const mediaUrls: string[] = [];
+        const hashAndExtension = media.media_url.substr(
+          media.media_url.lastIndexOf("/") + 1
+        );
 
-    tweet.entities.media.forEach((media) => {
-      const mediaUrls: string[] = [];
-      const hashAndExtension = media.media_url.substr(
-        media.media_url.lastIndexOf("/") + 1
-      );
-      mediaUrls.push(`archive/tweet_media/${tweet.id}-${hashAndExtension}`);
-      mediaUrls.push(media.media_url);
+        mediaUrls.push(`archive/tweet_media/${tweetId}-${hashAndExtension}`);
+        mediaUrls.push(media.media_url);
 
-      dispatch(addImage({ id: media.id, srcs: mediaUrls, activeIndex: 0 }));
-    });
-  });
+        return { id: media.id, srcs: mediaUrls, activeIndex: 0 };
+      });
 
-  const orderedTweets = tweets.sort((a, b) =>
-    twitterDateTimeStringToMoment(b.created_at).diff(
-      twitterDateTimeStringToMoment(a.created_at),
-      "s"
-    )
-  );
+    dispatch(addImages(images));
 
-  dispatch(setTweets(orderedTweets));
-};
+    const orderedTweets = tweets
+      .map((tweet) => ({
+        createdAt: twitterDateTimeStringToMoment(tweet.created_at),
+        tweet,
+      }))
+      .sort((a, b) => b.createdAt.diff(a.createdAt, "s"))
+      .map((x) => x.tweet);
+
+    dispatch(setTweets(orderedTweets));
+  };
