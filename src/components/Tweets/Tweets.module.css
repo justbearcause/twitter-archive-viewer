@@ -1,3 +1,16 @@
+.searchAndPaginationContainer {
+  padding: 15px;
+  border-top: 1px solid var(--borderColor);
+  border-bottom: 1px solid var(--borderColor);
+  display: flex;
+  gap: 15px;
+}
+
+.searchWrapper {
+  position: relative;
+  flex: 1;
+}
+
 .searchField {
   background-color: var(--inputBackground);
   border: 2px solid transparent;
@@ -14,16 +27,6 @@
   outline: none;
 }
 
-.searchContainer {
-  padding: 15px 15px 15px 15px;
-  border-top: 1px solid var(--borderColor);
-  border-bottom: 1px solid var(--borderColor);
-}
-
-.searchWrapper {
-  position: relative;
-}
-
 .searchIconContainer {
   color: var(--dimmedColor);
   position: absolute;
@@ -37,4 +40,16 @@
   width: 20px;
   height: 20px;
   fill: currentColor;
+}
+
+.topPagination {
+  flex: 0 0 auto;
+}
+
+.bottomPaginationContainer {
+  padding: 15px;
+}
+
+.bottomPagination {
+  justify-content: center;
 }
