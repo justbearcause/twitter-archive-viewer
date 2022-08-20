@@ -15,12 +15,12 @@
 }
 
 .modal {
-  max-width: 80vw;
-  max-height: 80vh;
+  max-width: 90vw;
+  max-height: 90vh;
   cursor: default;
 }
 
 .modal > * {
-  max-width: 80vw;
-  max-height: 80vh;
+  max-width: 90vw;
+  max-height: 90vh;
 }

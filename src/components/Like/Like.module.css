@@ -14,11 +14,13 @@
   flex: 1 1 auto;
   display: flex;
   gap: 10px;
+  flex-flow: row wrap;
 }
 
 .tweetActions {
   display: flex;
   gap: 10px;
+  flex-flow: row wrap;
 }
 
 .authorName {

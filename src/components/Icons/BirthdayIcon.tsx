@@ -1,10 +1,7 @@
 import React from "react";
+import { IconProps } from "./types";
 
-interface IconProps {
-  className?: string;
-}
-
-export default function BirthdayIcon(props: IconProps) {
+export function BirthdayIcon(props: IconProps) {
   return (
     <svg viewBox="0 0 24 24" className={props.className}>
       <g>

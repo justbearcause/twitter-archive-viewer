@@ -1,15 +1,9 @@
-import BirthdayIcon from "./BirthdayIcon";
-import CalendarIcon from "./CalendarIcon";
-import LikeIcon from "./LikeIcon";
-import MapPinIcon from "./MapPinIcon";
-import RetweetIcon from "./RetweetIcon";
-import SearchIcon from "./SearchIcon";
-
-export {
-  BirthdayIcon,
-  CalendarIcon,
-  MapPinIcon,
-  SearchIcon,
-  LikeIcon,
-  RetweetIcon,
-};
+export { BirthdayIcon } from "./BirthdayIcon";
+export { CalendarIcon } from "./CalendarIcon";
+export { LikeIcon } from "./LikeIcon";
+export { MapPinIcon } from "./MapPinIcon";
+export { NextIcon } from "./NextIcon";
+export { PreviousIcon } from "./PreviousIcon";
+export { RetweetIcon } from "./RetweetIcon";
+export { SearchIcon } from "./SearchIcon";
+export { SettingsIcon } from "./SettingsIcon";

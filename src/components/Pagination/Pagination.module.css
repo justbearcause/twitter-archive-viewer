@@ -5,22 +5,10 @@
 }
 
 .page {
-  padding: 10px;
   min-width: 35px;
-  text-align: center;
-  background: transparent;
-  border: 0;
-  color: var(--color);
-  border-radius: 5px;
-  cursor: pointer;
 }
 
 .current {
-  background: var(--inputBackground);
-  cursor: default;
-}
-
-.page:disabled {
-  color: var(--dimmedColor);
-  cursor: not-allowed;
+  background: var(--buttonPressedBackground) !important;
+  color: var(--color) !important;
 }

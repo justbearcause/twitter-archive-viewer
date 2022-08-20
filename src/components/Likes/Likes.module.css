@@ -3,7 +3,9 @@
   border-top: 1px solid var(--borderColor);
   border-bottom: 1px solid var(--borderColor);
   display: flex;
-  gap: 15px;
+  gap: 10px;
+  flex-flow: row wrap;
+  justify-content: center;
 }
 
 .searchWrapper {
@@ -20,6 +22,7 @@
   padding: 0 20px 0 35px;
   margin: 0;
   width: 100%;
+  min-width: 150px;
 }
 
 .searchField:focus {
