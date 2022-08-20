@@ -1,4 +1,6 @@
 import classNames from "classnames";
+import { Button } from "components/Button";
+import { NextIcon, PreviousIcon } from "components/Icons";
 import React from "react";
 
 import styles from "./Pagination.module.css";
@@ -30,68 +32,59 @@ export const Pagination = ({
 
   return (
     <div className={classNames(styles.container, className)}>
-      <button
-        type="button"
+      <Button
         className={styles.page}
         disabled={currentPage === 0}
         onClick={getClickHandler(0)}
-      >
-        ⇤
-      </button>
+        title="Go to the first page"
+        icon={PreviousIcon}
+      />
 
       {isValidPage(currentPage - 2) && !isValidPage(currentPage + 1) && (
-        <button
-          type="button"
+        <Button
           className={styles.page}
           onClick={getClickHandler(currentPage - 2)}
         >
           {currentPage - 1}
-        </button>
+        </Button>
       )}
       {isValidPage(currentPage - 1) && (
-        <button
-          type="button"
+        <Button
           className={styles.page}
           onClick={getClickHandler(currentPage - 1)}
         >
           {currentPage}
-        </button>
+        </Button>
       )}
       {isValidPage(currentPage) && (
-        <button
-          type="button"
-          className={classNames(styles.page, styles.current)}
-        >
+        <Button className={classNames(styles.page, styles.current)} disabled>
           {currentPage + 1}
-        </button>
+        </Button>
       )}
       {isValidPage(currentPage + 1) && (
-        <button
-          type="button"
+        <Button
           className={styles.page}
           onClick={getClickHandler(currentPage + 1)}
         >
           {currentPage + 2}
-        </button>
+        </Button>
       )}
       {isValidPage(currentPage + 2) && !isValidPage(currentPage - 1) && (
-        <button
-          type="button"
+        <Button
           className={styles.page}
           onClick={getClickHandler(currentPage + 2)}
         >
           {currentPage + 3}
-        </button>
+        </Button>
       )}
 
-      <button
-        type="button"
+      <Button
         className={styles.page}
         disabled={currentPage >= pageCount - 1}
         onClick={getClickHandler(pageCount - 1)}
-      >
-        ⇥
-      </button>
+        title="Go to the last page"
+        icon={NextIcon}
+      />
     </div>
   );
 };

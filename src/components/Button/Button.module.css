@@ -1,0 +1,40 @@
+.button {
+  background: transparent;
+  border: none;
+  color: var(--color);
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  gap: 5px;
+  transition: background var(--defaultTransition);
+  cursor: pointer;
+  text-align: center;
+  justify-content: center;
+}
+
+.borderStyleDefault {
+  border-radius: var(--defaultBorderRadius);
+}
+
+.borderStyleRound {
+  border-radius: 50vh;
+}
+
+.button:hover:not(:disabled),
+.button:focus-visible:not(:disabled) {
+  background: var(--buttonHoverBackground);
+}
+
+.button:active:not(:disabled) {
+  background: var(--buttonPressedBackground);
+}
+
+.button:disabled {
+  color: var(--dimmedColor);
+  cursor: default;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}

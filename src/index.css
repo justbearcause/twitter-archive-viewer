@@ -5,6 +5,13 @@
   --borderColor: rgb(56, 68, 77);
   --accentColor: rgb(224, 36, 94);
   --inputBackground: rgb(37, 51, 65);
+  --buttonHoverBackground: rgba(247, 249, 249, 0.1);
+  --buttonPressedBackground: rgba(247, 249, 249, 0.2);
+
+  --defaultBorderRadius: 5px;
+  --defaultTransition: 0.15s ease;
+
+  accent-color: var(--accentColor);
 }
 
 @media (prefers-color-scheme: light) {
@@ -14,6 +21,8 @@
     --dimmedColor: rgb(101, 119, 134);
     --borderColor: rgb(230, 236, 240);
     --inputBackground: rgb(230, 236, 240);
+    --buttonHoverBackground: rgba(15, 20, 25, 0.1);
+    --buttonPressedBackground: rgba(15, 20, 25, 0.2);
   }
 }
 
@@ -21,6 +30,8 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: inherit;
+  font-size: inherit;
 }
 
 html {
@@ -52,8 +63,4 @@ a:hover,
 a:visited,
 a:active {
   color: var(--accentColor);
-}
-
-* {
-  font-family: inherit;
 }

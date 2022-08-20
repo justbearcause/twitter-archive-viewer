@@ -1,12 +1,11 @@
 .media {
-  max-width: 400px;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 5px;
+  max-width: min(400px, 100%);
+  max-height: 400px;
+  border-radius: var(--defaultBorderRadius);
 }
 
 .fullMedia {
-  border-radius: 5px;
+  border-radius: var(--defaultBorderRadius);
 }
 
 .mediaContainer {

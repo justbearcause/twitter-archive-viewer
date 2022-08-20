@@ -2,7 +2,7 @@
   max-width: 400px;
   height: 200px;
   object-fit: cover;
-  border-radius: 5px;
+  border-radius: var(--defaultBorderRadius);
 }
 
 .mediaContainer {

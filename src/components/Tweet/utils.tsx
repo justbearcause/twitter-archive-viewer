@@ -49,7 +49,12 @@ export const prepareTweetText = (tweet: TweetModel) => {
       to: +url.indices[1],
       content: React.createElement(
         "a",
-        { target: "_blank", rel: "noopener noreferrer", key, href: url },
+        {
+          target: "_blank",
+          rel: "noopener noreferrer",
+          key,
+          href: url.expanded_url,
+        },
         url.display_url
       ),
     });
