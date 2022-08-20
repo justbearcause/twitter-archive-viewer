@@ -1,7 +1,14 @@
 import { Button } from "components/Button";
 import { Pagination } from "components/Pagination";
 import { Settings, SettingsPanel } from "components/SettingsPanel";
-import React, { FunctionComponent, useMemo, useRef, useState } from "react";
+import React, {
+  FunctionComponent,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { useSearchParams } from "react-router-dom";
 import { AppState, useAppSelector } from "store";
 import { SearchIcon, SettingsIcon } from "../Icons";
 import { Tweet } from "../Tweet";
@@ -14,8 +21,20 @@ export const Tweets: FunctionComponent = () => {
   const [isSettingsVisible, setIsSettingsVisible] = useState(false);
   const [filters, setFilters] = useState<Settings>({});
   const [search, setSearch] = useState("");
-  const [page, setPage] = useState(0);
+  const [searchParams, setSearchParams] = useSearchParams({ page: "0" });
   const tweets = useAppSelector((state: AppState) => state.archive.tweets);
+
+  const page = useMemo(() => {
+    const p = Number(searchParams.get("page"));
+    return isNaN(p) ? 0 : p;
+  }, [searchParams]);
+
+  const setPage = useCallback(
+    (newPage: number) => {
+      setSearchParams({ page: String(newPage) });
+    },
+    [setSearchParams]
+  );
 
   const filterDataSource = useMemo(() => {
     let result = tweets;
@@ -47,11 +66,12 @@ export const Tweets: FunctionComponent = () => {
   };
 
   const handleBottomPaginationChange = (newPage: number) => {
-    setPage(newPage);
-
     if (topPaginationContainerRef.current) {
-      window.scrollTo(0, topPaginationContainerRef.current.offsetTop);
+      const offset = topPaginationContainerRef.current.offsetTop;
+      setTimeout(() => window.scrollTo(0, offset), 0);
     }
+
+    setPage(newPage);
   };
 
   return (
