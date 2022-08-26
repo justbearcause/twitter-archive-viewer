@@ -1,12 +1,18 @@
 :root {
   --background: rgb(21, 32, 43);
-  --color: white;
+  --color: rgb(247, 249, 249);
   --dimmedColor: rgb(136, 153, 166);
   --borderColor: rgb(56, 68, 77);
-  --accentColor: rgb(224, 36, 94);
+  --accentColor: hsl(341deg 75% 51%);
   --inputBackground: rgb(37, 51, 65);
+
   --buttonHoverBackground: rgba(247, 249, 249, 0.1);
   --buttonPressedBackground: rgba(247, 249, 249, 0.2);
+
+  --toggleBackground: var(--inputBackground);
+  --toggleEnabledBackground: var(--accentColor);
+  --toggleHeadBackground: var(--color);
+  --toggleHeadEnabledBackground: var(--color);
 
   --defaultBorderRadius: 5px;
   --defaultTransition: 0.15s ease;
@@ -21,12 +27,20 @@
     --dimmedColor: rgb(101, 119, 134);
     --borderColor: rgb(230, 236, 240);
     --inputBackground: rgb(230, 236, 240);
+
     --buttonHoverBackground: rgba(15, 20, 25, 0.1);
     --buttonPressedBackground: rgba(15, 20, 25, 0.2);
+
+    --toggleBackground: rgba(15, 20, 25, 0.2);
+    --toggleEnabledBackground: var(--accentColor);
+    --toggleHeadBackground: var(--background);
+    --toggleHeadEnabledBackground: var(--background);
   }
 }
 
-* {
+*,
+*:before,
+*:after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -63,4 +77,9 @@ a:hover,
 a:visited,
 a:active {
   color: var(--accentColor);
+}
+
+*:focus-visible {
+  outline: var(--accentColor) solid 2px;
+  outline-offset: 2px;
 }

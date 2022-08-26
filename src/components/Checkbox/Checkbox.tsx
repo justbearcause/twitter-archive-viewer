@@ -16,7 +16,7 @@ export const Checkbox = ({
   onChange,
   value,
 }: CheckboxProps) => {
-  const onlyWithMediaId = useRef(uuid());
+  const inputIdRef = useRef(uuid());
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
@@ -27,12 +27,12 @@ export const Checkbox = ({
   return (
     <div className={classNames(styles.container, className)}>
       <input
-        id={onlyWithMediaId.current}
+        id={inputIdRef.current}
         type="checkbox"
         checked={value}
         onChange={handleChange}
       />
-      {!!label && <label htmlFor={onlyWithMediaId.current}>{label}</label>}
+      {!!label && <label htmlFor={inputIdRef.current}>{label}</label>}
     </div>
   );
 };

@@ -1,5 +1,15 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+}
+
+.toggle {
+  flex-flow: row-reverse;
+  justify-content: space-between;
+  padding: 20px 25px;
+  border-bottom: 1px solid var(--borderColor);
+}
+
+.toggle:last-child {
+  border-bottom: none;
 }
