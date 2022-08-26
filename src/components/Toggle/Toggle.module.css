@@ -1,0 +1,67 @@
+.container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.label {
+  color: var(--color);
+  cursor: pointer;
+}
+
+.wrapper {
+  display: flex;
+
+  --base-size: 24px;
+  --paddings: 2.5px;
+}
+
+.wrapper input[type="checkbox"] {
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+}
+
+.wrapper label {
+  cursor: pointer;
+  text-indent: -9999px;
+  width: calc(var(--base-size) * 2);
+  height: var(--base-size);
+  background: var(--toggleBackground);
+  display: block;
+  border-radius: var(--base-size);
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+.wrapper label:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: var(--paddings);
+  left: var(--paddings);
+  width: calc(var(--base-size) - var(--paddings) * 2);
+  height: calc(var(--base-size) - var(--paddings) * 2);
+  background: var(--toggleHeadBackground);
+  border-radius: calc(var(--base-size) - var(--paddings) * 2);
+  transition: left 0.3s ease, background 0.3s ease;
+}
+
+.wrapper input:checked + label {
+  background: var(--toggleEnabledBackground);
+}
+
+.wrapper input:checked + label:after {
+  left: calc(var(--base-size) + var(--paddings));
+  background: var(--toggleHeadEnabledBackground);
+}
+
+.wrapper input:focus-visible + label {
+  outline: var(--accentColor) solid 2px;
+  outline-offset: 2px;
+}

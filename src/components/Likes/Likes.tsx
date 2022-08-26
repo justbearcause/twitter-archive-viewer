@@ -1,5 +1,6 @@
 import { Like } from "components/Like";
 import { Pagination } from "components/Pagination";
+import { SearchField } from "components/SearchField";
 import React, {
   FunctionComponent,
   useCallback,
@@ -9,7 +10,6 @@ import React, {
 } from "react";
 import { useSearchParams } from "react-router-dom";
 import { AppState, useAppSelector } from "store";
-import { SearchIcon } from "../Icons";
 import styles from "./Likes.module.css";
 
 const PAGE_SIZE = 50;
@@ -17,7 +17,7 @@ const PAGE_SIZE = 50;
 export const Likes: FunctionComponent = () => {
   const topPaginationContainerRef = useRef<HTMLDivElement>(null);
   const [search, setSearch] = useState("");
-  const [searchParams, setSearchParams] = useSearchParams({ page: "0" });
+  const [searchParams, setSearchParams] = useSearchParams();
   const likes = useAppSelector((state: AppState) => state.likes.likes);
 
   const page = useMemo(() => {
@@ -71,18 +71,7 @@ export const Likes: FunctionComponent = () => {
           pageCount={pagesCount}
           onChange={handleTopPaginationChange}
         />
-        <div className={styles.searchWrapper}>
-          <input
-            type="text"
-            placeholder="Search tweets"
-            className={styles.searchField}
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <div className={styles.searchIconContainer}>
-            <SearchIcon className={styles.searchIcon} />
-          </div>
-        </div>
+        <SearchField value={search} onChange={setSearch} />
       </div>
       <div className={styles.tweets}>
         {likesSlice.map((like) => (

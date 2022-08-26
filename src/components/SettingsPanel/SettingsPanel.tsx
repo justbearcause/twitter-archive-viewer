@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { Checkbox } from "components/Checkbox";
+import { Toggle } from "components/Toggle";
 import React from "react";
 import styles from "./SettingsPanel.module.css";
 import { Settings } from "./types";
@@ -17,12 +17,14 @@ export const SettingsPanel = ({
 }: FilterPanelProps) => {
   return (
     <div className={classNames(styles.container, className)}>
-      <Checkbox
+      <Toggle
+        className={styles.toggle}
         onChange={(v) => onChange({ ...value, onlyWithMedia: v })}
         value={value.onlyWithMedia}
         label="Show only tweets with media"
       />
-      <Checkbox
+      <Toggle
+        className={styles.toggle}
         onChange={(v) => onChange({ ...value, reverseOrder: v })}
         value={value.reverseOrder}
         label="Reverse feed order"

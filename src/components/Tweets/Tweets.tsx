@@ -1,5 +1,6 @@
 import { Button } from "components/Button";
 import { Pagination } from "components/Pagination";
+import { SearchField } from "components/SearchField";
 import { Settings, SettingsPanel } from "components/SettingsPanel";
 import React, {
   FunctionComponent,
@@ -10,7 +11,7 @@ import React, {
 } from "react";
 import { useSearchParams } from "react-router-dom";
 import { AppState, useAppSelector } from "store";
-import { SearchIcon, SettingsIcon } from "../Icons";
+import { SettingsIcon } from "../Icons";
 import { Tweet } from "../Tweet";
 import styles from "./Tweets.module.css";
 
@@ -19,9 +20,9 @@ const PAGE_SIZE = 50;
 export const Tweets: FunctionComponent = () => {
   const topPaginationContainerRef = useRef<HTMLDivElement>(null);
   const [isSettingsVisible, setIsSettingsVisible] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
   const [filters, setFilters] = useState<Settings>({});
   const [search, setSearch] = useState("");
-  const [searchParams, setSearchParams] = useSearchParams({ page: "0" });
   const tweets = useAppSelector((state: AppState) => state.archive.tweets);
 
   const page = useMemo(() => {
@@ -87,18 +88,7 @@ export const Tweets: FunctionComponent = () => {
           onChange={handleTopPaginationChange}
         />
         <div className={styles.searchAndSettingsWrapper}>
-          <div className={styles.searchWrapper}>
-            <input
-              type="text"
-              placeholder="Search tweets"
-              className={styles.searchField}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <div className={styles.searchIconContainer}>
-              <SearchIcon className={styles.searchIcon} />
-            </div>
-          </div>
+          <SearchField value={search} onChange={setSearch} />
           <Button
             icon={SettingsIcon}
             title="Show feed settings"
