@@ -17,7 +17,7 @@ export const SearchField = ({ value, onChange }: Props) => {
         value={value}
         onChange={(e) => onChange(e.target.value)}
       />
-      <div className={styles.searchIconContainer}>
+      <div className={styles.searchIconContainer} aria-hidden="true">
         <SearchIcon className={styles.searchIcon} />
       </div>
     </div>

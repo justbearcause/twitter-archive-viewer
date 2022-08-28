@@ -15,6 +15,10 @@
   min-width: 150px;
 }
 
+.searchField::placeholder {
+  color: var(--dimmedColor);
+}
+
 .searchField:focus {
   border: 2px solid var(--accentColor);
   outline: none;
@@ -27,6 +31,7 @@
   top: 10px;
   width: 20px;
   height: 20px;
+  pointer-events: none;
 }
 
 .searchIcon {
