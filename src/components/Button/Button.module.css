@@ -1,5 +1,5 @@
 .button {
-  background: transparent;
+  background: var(--buttonBackground);
   border: none;
   color: var(--color);
   display: flex;
@@ -37,4 +37,8 @@
 .icon {
   width: 20px;
   height: 20px;
+}
+
+.button.toggled {
+  background: var(--buttonToggledBackground) !important;
 }

@@ -4,11 +4,17 @@
   gap: 10px;
 }
 
-.page {
+.pageButton {
   min-width: 35px;
 }
 
-.current {
-  background: var(--buttonPressedBackground) !important;
-  color: var(--color) !important;
+.prevButton,
+.nextButton {
+  min-width: 35px;
+}
+
+.prevButtonIcon,
+.nextButtonIcon {
+  width: 16px;
+  height: 16px;
 }

@@ -72,7 +72,7 @@
 }
 
 .retweetIcon {
-  color: rgb(23, 191, 99);
+  color: var(--retweetColor);
 }
 
 .embedPlaceholder {

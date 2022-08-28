@@ -33,16 +33,17 @@ export const Pagination = ({
   return (
     <div className={classNames(styles.container, className)}>
       <Button
-        className={styles.page}
+        className={styles.prevButton}
         disabled={currentPage === 0}
         onClick={getClickHandler(0)}
         title="Go to the first page"
         icon={PreviousIcon}
+        iconClassName={styles.prevButtonIcon}
       />
 
       {isValidPage(currentPage - 2) && !isValidPage(currentPage + 1) && (
         <Button
-          className={styles.page}
+          className={styles.pageButton}
           onClick={getClickHandler(currentPage - 2)}
         >
           {currentPage - 1}
@@ -50,20 +51,20 @@ export const Pagination = ({
       )}
       {isValidPage(currentPage - 1) && (
         <Button
-          className={styles.page}
+          className={styles.pageButton}
           onClick={getClickHandler(currentPage - 1)}
         >
           {currentPage}
         </Button>
       )}
       {isValidPage(currentPage) && (
-        <Button className={classNames(styles.page, styles.current)} disabled>
+        <Button className={styles.pageButton} toggled>
           {currentPage + 1}
         </Button>
       )}
       {isValidPage(currentPage + 1) && (
         <Button
-          className={styles.page}
+          className={styles.pageButton}
           onClick={getClickHandler(currentPage + 1)}
         >
           {currentPage + 2}
@@ -71,7 +72,7 @@ export const Pagination = ({
       )}
       {isValidPage(currentPage + 2) && !isValidPage(currentPage - 1) && (
         <Button
-          className={styles.page}
+          className={styles.pageButton}
           onClick={getClickHandler(currentPage + 2)}
         >
           {currentPage + 3}
@@ -79,11 +80,12 @@ export const Pagination = ({
       )}
 
       <Button
-        className={styles.page}
+        className={styles.nextButton}
         disabled={currentPage >= pageCount - 1}
         onClick={getClickHandler(pageCount - 1)}
         title="Go to the last page"
         icon={NextIcon}
+        iconClassName={styles.nextButtonIcon}
       />
     </div>
   );

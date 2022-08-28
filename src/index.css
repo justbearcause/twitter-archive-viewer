@@ -1,13 +1,15 @@
 :root {
-  --background: rgb(21, 32, 43);
-  --color: rgb(247, 249, 249);
-  --dimmedColor: rgb(136, 153, 166);
-  --borderColor: rgb(56, 68, 77);
-  --accentColor: hsl(341deg 75% 51%);
-  --inputBackground: rgb(37, 51, 65);
+  --background: hsl(210, 34%, 15%);
+  --color: hsl(180, 14%, 95%);
+  --dimmedColor: hsl(206, 14%, 60%);
+  --borderColor: hsl(210, 27%, 25%);
+  --accentColor: hsl(341, 75%, 50%);
+  --inputBackground: hsl(210, 27%, 20%);
 
-  --buttonHoverBackground: rgba(247, 249, 249, 0.1);
-  --buttonPressedBackground: rgba(247, 249, 249, 0.2);
+  --buttonBackground: transparent;
+  --buttonHoverBackground: hsl(210, 27%, 20%);
+  --buttonPressedBackground: hsl(210, 27%, 25%);
+  --buttonToggledBackground: hsl(210, 27%, 20%);
 
   --toggleBackground: var(--inputBackground);
   --toggleEnabledBackground: var(--accentColor);
@@ -17,21 +19,26 @@
   --defaultBorderRadius: 5px;
   --defaultTransition: 0.15s ease;
 
+  --likeColor: rgb(224, 36, 94);
+  --retweetColor: rgb(23, 191, 99);
+
   accent-color: var(--accentColor);
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    --background: white;
-    --color: black;
-    --dimmedColor: rgb(101, 119, 134);
-    --borderColor: rgb(230, 236, 240);
-    --inputBackground: rgb(230, 236, 240);
+    --background: hsl(0, 0%, 100%);
+    --color: hsl(0, 0%, 0%);
+    --dimmedColor: hsl(207, 14%, 45%);
+    --borderColor: hsl(204, 25%, 90%);
+    --inputBackground: hsl(204, 25%, 90%);
 
-    --buttonHoverBackground: rgba(15, 20, 25, 0.1);
-    --buttonPressedBackground: rgba(15, 20, 25, 0.2);
+    --buttonBackground: transparent;
+    --buttonHoverBackground: hsl(204, 25%, 90%);
+    --buttonPressedBackground: hsl(204, 25%, 85%);
+    --buttonToggledBackground: hsl(204, 25%, 90%);
 
-    --toggleBackground: rgba(15, 20, 25, 0.2);
+    --toggleBackground: hsla(204, 25%, 80%);
     --toggleEnabledBackground: var(--accentColor);
     --toggleHeadBackground: var(--background);
     --toggleHeadEnabledBackground: var(--background);
