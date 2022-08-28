@@ -91,7 +91,9 @@ export const Tweets: FunctionComponent = () => {
           <SearchField value={search} onChange={setSearch} />
           <Button
             icon={SettingsIcon}
-            title={isSettingsVisible ? "Hide feed settings" : "Show feed settings"}
+            title={
+              isSettingsVisible ? "Hide feed settings" : "Show feed settings"
+            }
             onClick={() => setIsSettingsVisible((x) => !x)}
             toggled={isSettingsVisible}
             borderStyle="round"
