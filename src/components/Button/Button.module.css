@@ -12,11 +12,11 @@
   justify-content: center;
 }
 
-.borderStyleDefault {
+.button.borderStyleDefault {
   border-radius: var(--defaultBorderRadius);
 }
 
-.borderStyleRound {
+.button.borderStyleRound {
   border-radius: 50vh;
 }
 
@@ -29,6 +29,19 @@
   background: var(--buttonPressedBackground);
 }
 
+.button.toggled {
+  background: var(--buttonToggledBackground);
+}
+
+.button.toggled:hover:not(:disabled),
+.button.toggled:focus-visible:not(:disabled) {
+  background: var(--buttonToggledHoverBackground);
+}
+
+.button.toggled:active:not(:disabled) {
+  background: var(--buttonToggledPressedBackground);
+}
+
 .button:disabled {
   color: var(--dimmedColor);
   cursor: default;
@@ -37,8 +50,4 @@
 .icon {
   width: 20px;
   height: 20px;
-}
-
-.button.toggled {
-  background: var(--buttonToggledBackground) !important;
 }

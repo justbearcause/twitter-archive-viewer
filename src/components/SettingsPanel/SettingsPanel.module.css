@@ -5,11 +5,16 @@
 
 .toggle {
   flex-flow: row-reverse;
+}
+
+.settingContainer {
+  display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 20px 25px;
   border-bottom: 1px solid var(--borderColor);
 }
 
-.toggle:last-child {
+.settingContainer:last-child {
   border-bottom: none;
 }

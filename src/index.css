@@ -10,6 +10,8 @@
   --buttonHoverBackground: hsl(210, 27%, 20%);
   --buttonPressedBackground: hsl(210, 27%, 25%);
   --buttonToggledBackground: hsl(210, 27%, 20%);
+  --buttonToggledHoverBackground: hsl(210, 27%, 25%);
+  --buttonToggledPressedBackground: hsl(210, 27%, 30%);
 
   --toggleBackground: var(--inputBackground);
   --toggleEnabledBackground: var(--accentColor);
@@ -37,6 +39,8 @@
     --buttonHoverBackground: hsl(204, 25%, 90%);
     --buttonPressedBackground: hsl(204, 25%, 85%);
     --buttonToggledBackground: hsl(204, 25%, 90%);
+    --buttonToggledHoverBackground: hsl(204, 25%, 85%);
+    --buttonToggledPressedBackground: hsl(204, 25%, 80%);
 
     --toggleBackground: hsla(204, 25%, 80%);
     --toggleEnabledBackground: var(--accentColor);

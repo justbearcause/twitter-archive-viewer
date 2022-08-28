@@ -5,6 +5,7 @@ import { Settings, SettingsPanel } from "components/SettingsPanel";
 import React, {
   FunctionComponent,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -41,11 +42,15 @@ export const Tweets: FunctionComponent = () => {
     let result = tweets;
 
     if (search) {
-      result = tweets.filter((tweet) => tweet.full_text.indexOf(search) >= 0);
+      result = result.filter((tweet) => tweet.full_text.indexOf(search) >= 0);
     }
 
     if (filters.onlyWithMedia) {
-      result = tweets.filter((tweet) => !!tweet.entities.media?.length);
+      result = result.filter((tweet) => !!tweet.entities.media?.length);
+    }
+
+    if (filters.hideRetweets) {
+      result = result.filter((tweet) => !tweet.retweeted);
     }
 
     if (filters.reverseOrder) {
@@ -53,7 +58,13 @@ export const Tweets: FunctionComponent = () => {
     }
 
     return result;
-  }, [tweets, search, filters.onlyWithMedia, filters.reverseOrder]);
+  }, [
+    tweets,
+    search,
+    filters.onlyWithMedia,
+    filters.reverseOrder,
+    filters.hideRetweets,
+  ]);
 
   const pagesCount = Math.ceil(filterDataSource.length / PAGE_SIZE);
 
@@ -74,6 +85,11 @@ export const Tweets: FunctionComponent = () => {
 
     setPage(newPage);
   };
+
+  useEffect(() => {
+    setPage(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filters.onlyWithMedia, filters.hideRetweets]);
 
   return (
     <>

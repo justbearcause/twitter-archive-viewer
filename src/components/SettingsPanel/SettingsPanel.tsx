@@ -18,13 +18,19 @@ export const SettingsPanel = ({
   return (
     <div className={classNames(styles.container, className)}>
       <Toggle
-        className={styles.toggle}
+        className={classNames(styles.toggle, styles.settingContainer)}
         onChange={(v) => onChange({ ...value, onlyWithMedia: v })}
         value={value.onlyWithMedia}
         label="Show only tweets with media"
       />
       <Toggle
-        className={styles.toggle}
+        className={classNames(styles.toggle, styles.settingContainer)}
+        onChange={(v) => onChange({ ...value, hideRetweets: v })}
+        value={value.hideRetweets}
+        label="Hide Retweets"
+      />
+      <Toggle
+        className={classNames(styles.toggle, styles.settingContainer)}
         onChange={(v) => onChange({ ...value, reverseOrder: v })}
         value={value.reverseOrder}
         label="Reverse feed order"

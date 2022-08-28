@@ -32,10 +32,21 @@ export const setTweetsThunk =
     const orderedTweets = tweets
       .map((tweet) => ({
         createdAt: twitterDateTimeStringToMoment(tweet.created_at),
-        tweet,
+        tweet: fixRetweetFlag(tweet),
       }))
       .sort((a, b) => b.createdAt.diff(a.createdAt, "s"))
       .map((x) => x.tweet);
 
     dispatch(setTweets(orderedTweets));
   };
+
+const retweetRegexp = /^RT @([^:]+)/i;
+const fixRetweetFlag = (tweet: TweetModel): TweetModel => {
+  const retweetMatch = tweet.full_text.match(retweetRegexp);
+
+  if (retweetMatch && retweetMatch.length >= 2 && retweetMatch[1]) {
+    return { ...tweet, retweeted: true };
+  }
+
+  return tweet;
+};
