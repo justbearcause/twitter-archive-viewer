@@ -3,13 +3,13 @@ import React from "react";
 import { useAppDispatch } from "store";
 import { showModal } from "store/archive";
 import { TweetMediaModel } from "../../models";
-import styles from "./Media.module.css";
+import styles from "./TweetMedia.module.css";
 
 type Props = {
   media: TweetMediaModel;
 };
 
-export const Media: React.FunctionComponent<Props> = ({ media }) => {
+export const TweetMedia: React.FunctionComponent<Props> = ({ media }) => {
   const dispatch = useAppDispatch();
 
   const onImagePreviewToggle = () => {

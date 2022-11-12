@@ -11,6 +11,9 @@ export const Navigation: React.FunctionComponent = () => {
       <NavLink to="/likes" className={styles.item}>
         Likes
       </NavLink>
+      <NavLink to="/media" className={styles.item}>
+        Media
+      </NavLink>
     </div>
   );
 };

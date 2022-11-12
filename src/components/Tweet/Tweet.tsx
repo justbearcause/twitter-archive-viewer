@@ -4,7 +4,7 @@ import { Image } from "components/Image";
 import { TweetModel } from "models";
 import React, { useState } from "react";
 import { TwitterTweetEmbed } from "react-twitter-embed";
-import { Media } from "../Media";
+import { TweetMedia } from "../TweetMedia";
 import styles from "./Tweet.module.css";
 import { useTweet } from "./useTweet";
 
@@ -75,7 +75,7 @@ export const Tweet: React.FunctionComponent<Props> = ({ tweet }) => {
         {hasMedia && (
           <div>
             {tweet.extended_entities!.media.map((media) => (
-              <Media key={media.id} media={media} />
+              <TweetMedia key={media.id} media={media} />
             ))}
           </div>
         )}
