@@ -1,5 +1,5 @@
+import { ImageLightbox } from "components/ImageLightbox";
 import { Layout } from "components/Layout";
-import { Modal } from "components/Modal";
 import { Navigation } from "components/Navigation";
 import { Profile } from "components/Profile";
 import React from "react";
@@ -12,7 +12,7 @@ function App() {
     <ArchiveLoader>
       <HashRouter>
         <Layout>
-          <Modal />
+          <ImageLightbox />
           <Profile />
           <Navigation />
           <Router />

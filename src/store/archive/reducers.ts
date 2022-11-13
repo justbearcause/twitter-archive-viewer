@@ -4,7 +4,7 @@ import {
   setFollowers,
   setFollowings,
   setTweets,
-  showModal,
+  showImage,
 } from "./actions";
 import { initialState } from "./types";
 
@@ -19,13 +19,13 @@ const archiveReducer = createReducer(initialState, (builder) =>
     .addCase(setFollowings, (state, action) => {
       state.followings = action.payload;
     })
-    .addCase(showModal, (state, action) => {
-      state.modalContent = action.payload;
-      state.isModalVisible = true;
+    .addCase(showImage, (state, action) => {
+      state.image = action.payload;
+      state.isImageShown = true;
     })
     .addCase(closeModal, (state) => {
-      state.isModalVisible = false;
-      state.modalContent = undefined;
+      state.isImageShown = false;
+      state.image = undefined;
     })
     .addDefaultCase((state) => state)
 );

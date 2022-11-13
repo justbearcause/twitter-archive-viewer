@@ -1,5 +1,10 @@
 import { createAction } from "@reduxjs/toolkit";
-import { FollowerModel, FollowingModel, TweetModel } from "models";
+import {
+  FollowerModel,
+  FollowingModel,
+  TweetMediaModel,
+  TweetModel,
+} from "models";
 import withPayloadType from "store/withPayloadType";
 import {
   CLOSE_MODAL,
@@ -24,9 +29,9 @@ export const setFollowings = createAction(
   withPayloadType<FollowingModel[]>()
 );
 
-export const showModal = createAction(
+export const showImage = createAction(
   SHOW_MODAL,
-  withPayloadType<JSX.Element>()
+  withPayloadType<TweetMediaModel>()
 );
 
 export const closeModal = createAction(CLOSE_MODAL);

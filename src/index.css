@@ -1,4 +1,6 @@
-:root {
+:root,
+::after,
+::before {
   --background: hsl(210, 34%, 15%);
   --color: hsl(180, 14%, 95%);
   --dimmedColor: hsl(206, 14%, 60%);
@@ -24,11 +26,17 @@
   --likeColor: rgb(224, 36, 94);
   --retweetColor: rgb(23, 191, 99);
 
+  --skeletonMaxOpacity: 0.1;
+  --skeletonBackground: hsl(210, 27%, 20%);
+  --skeletonBaseColor: 255, 255, 255;
+
   accent-color: var(--accentColor);
 }
 
 @media (prefers-color-scheme: light) {
-  :root {
+  :root,
+  ::after,
+  ::before {
     --background: hsl(0, 0%, 100%);
     --color: hsl(0, 0%, 0%);
     --dimmedColor: hsl(207, 14%, 45%);
@@ -46,6 +54,10 @@
     --toggleEnabledBackground: var(--accentColor);
     --toggleHeadBackground: var(--background);
     --toggleHeadEnabledBackground: var(--background);
+
+    --skeletonMaxOpacity: 0.5;
+    --skeletonBackground: hsl(204, 25%, 90%);
+    --skeletonBaseColor: 255, 255, 255;
   }
 }
 
@@ -67,7 +79,6 @@ html {
   background: var(--background);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  scroll-behavior: smooth;
 }
 
 body {

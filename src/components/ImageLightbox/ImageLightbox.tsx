@@ -1,18 +1,17 @@
+import { Image } from "components/Image";
 import React from "react";
 import { AppState, useAppDispatch, useAppSelector } from "store";
 import { closeModal } from "store/archive";
-import styles from "./Modal.module.css";
+import styles from "./ImageLightbox.module.css";
 
-export const Modal: React.FunctionComponent = () => {
+export const ImageLightbox: React.FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const isVisible = useAppSelector(
-    (state: AppState) => state.archive.isModalVisible
+    (state: AppState) => state.archive.isImageShown
   );
-  const content = useAppSelector(
-    (state: AppState) => state.archive.modalContent
-  );
+  const image = useAppSelector((state: AppState) => state.archive.image);
 
-  if (!isVisible) {
+  if (!isVisible || !image) {
     return null;
   }
 
@@ -26,7 +25,9 @@ export const Modal: React.FunctionComponent = () => {
 
   return (
     <div className={styles.backdrop} onClick={onModalClose}>
-      <div className={styles.modal}>{content}</div>
+      <div className={styles.container}>
+        <Image id={image.id} alt={image.display_url} className={styles.image} />
+      </div>
     </div>
   );
 };

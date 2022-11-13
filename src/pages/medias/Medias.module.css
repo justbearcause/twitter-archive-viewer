@@ -19,3 +19,16 @@
 .bottomPagination {
   justify-content: center;
 }
+
+.medias {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.masonryColumn {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 8px;
+}

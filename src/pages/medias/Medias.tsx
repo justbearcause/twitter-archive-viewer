@@ -1,16 +1,66 @@
+import { Media } from "components/Media";
 import { Pagination } from "components/Pagination";
-import { Tweet } from "components/Tweet";
+import { TweetMediaModel, TweetModel } from "models";
 import React, { FunctionComponent, useCallback, useMemo, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { AppState, useAppSelector } from "store";
 import styles from "./Medias.module.css";
 
-const PAGE_SIZE = 50;
+const PAGE_SIZE = 100;
+const COLUMNS_COUNT = 3;
+
+const splitIntoColumns = (
+  medias: TweetAndMediaPair[],
+  columnsCount: number
+) => {
+  let results: TweetAndMediaPair[][] = [];
+  let totalHeights: number[] = [];
+
+  for (let columnIndex = 0; columnIndex < columnsCount; columnIndex++) {
+    results[columnIndex] = [];
+    totalHeights[columnIndex] = 0;
+  }
+
+  const getColumnWithMinHeight = () => {
+    let minHeight = Number.MAX_VALUE;
+    let minColumnIndex = 0;
+    for (let columnIndex = 0; columnIndex < columnsCount; columnIndex++) {
+      if (totalHeights[columnIndex] < minHeight) {
+        minHeight = totalHeights[columnIndex];
+        minColumnIndex = columnIndex;
+      }
+    }
+
+    return minColumnIndex;
+  };
+
+  for (const media of medias) {
+    const columnIndex = getColumnWithMinHeight();
+    const mediaHeight = Number(media.media.sizes.large.h);
+    const mediaWidth = Number(media.media.sizes.large.w);
+
+    totalHeights[columnIndex] += mediaHeight / mediaWidth;
+    results[columnIndex].push(media);
+  }
+
+  return results;
+};
+
+type TweetAndMediaPair = {
+  tweet: TweetModel;
+  media: TweetMediaModel;
+};
 
 export const Medias: FunctionComponent = () => {
   const topPaginationContainerRef = useRef<HTMLDivElement>(null);
   const [searchParams, setSearchParams] = useSearchParams();
-  const tweets = useAppSelector((state: AppState) => state.archive.tweets);
+  const medias: TweetAndMediaPair[] = useAppSelector((state: AppState) =>
+    state.archive.tweets
+      .filter((tweet) => !!tweet.entities.media?.length)
+      .flatMap((tweet) =>
+        tweet.entities!.media!.map((media) => ({ tweet, media }))
+      )
+  );
 
   const page = useMemo(() => {
     const p = Number(searchParams.get("page"));
@@ -24,15 +74,16 @@ export const Medias: FunctionComponent = () => {
     [setSearchParams]
   );
 
-  const filterDataSource = useMemo(() => {
-    return tweets.filter((tweet) => !!tweet.entities.media?.length);
-  }, [tweets]);
+  const pagesCount = Math.ceil(medias.length / PAGE_SIZE);
 
-  const pagesCount = Math.ceil(filterDataSource.length / PAGE_SIZE);
+  const mediasSlice = useMemo(
+    () => medias.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE - 1),
+    [medias, page]
+  );
 
-  const tweetsSlice = useMemo(
-    () => filterDataSource.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE - 1),
-    [filterDataSource, page]
+  const masonryMediaSlices = useMemo(
+    () => splitIntoColumns(mediasSlice, COLUMNS_COUNT),
+    [mediasSlice]
   );
 
   const handleTopPaginationChange = (newPage: number) => {
@@ -61,9 +112,17 @@ export const Medias: FunctionComponent = () => {
           onChange={handleTopPaginationChange}
         />
       </div>
-      <div className={styles.tweets}>
-        {tweetsSlice.map((tweet) => (
-          <Tweet key={tweet.id} tweet={tweet} />
+      <div className={styles.medias}>
+        {masonryMediaSlices?.map((slice) => (
+          <div key={slice[0]?.media.id_str} className={styles.masonryColumn}>
+            {slice.map((pair) => (
+              <Media
+                tweet={pair.tweet}
+                media={pair.media}
+                key={pair.media.id_str}
+              />
+            ))}
+          </div>
         ))}
       </div>
       <div className={styles.bottomPaginationContainer}>

@@ -1,15 +1,16 @@
 import { Image } from "components/Image";
+import { TweetMediaModel, TweetModel } from "models";
 import React from "react";
 import { useAppDispatch } from "store";
 import { showImage } from "store/archive";
-import { TweetMediaModel } from "../../models";
-import styles from "./TweetMedia.module.css";
+import styles from "./Media.module.css";
 
 type Props = {
   media: TweetMediaModel;
+  tweet: TweetModel;
 };
 
-export const TweetMedia: React.FunctionComponent<Props> = ({ media }) => {
+export const Media: React.FunctionComponent<Props> = ({ media, tweet }) => {
   const dispatch = useAppDispatch();
 
   const onImagePreviewToggle = () => {
@@ -17,7 +18,7 @@ export const TweetMedia: React.FunctionComponent<Props> = ({ media }) => {
   };
 
   return (
-    <div className={styles.mediaContainer} onClick={onImagePreviewToggle}>
+    <div className={styles.container} onClick={onImagePreviewToggle}>
       <Image
         id={media.id}
         alt={media.display_url}

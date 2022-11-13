@@ -14,13 +14,10 @@
   backdrop-filter: blur(5px);
 }
 
-.modal {
+.image {
+  border-radius: var(--defaultBorderRadius);
   max-width: 90vw;
   max-height: 90vh;
+  margin: auto;
   cursor: default;
-}
-
-.modal > * {
-  max-width: 90vw;
-  max-height: 90vh;
 }

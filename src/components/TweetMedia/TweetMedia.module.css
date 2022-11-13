@@ -4,10 +4,6 @@
   border-radius: var(--defaultBorderRadius);
 }
 
-.fullMedia {
-  border-radius: var(--defaultBorderRadius);
-}
-
 .mediaContainer {
   margin-top: 10px;
   cursor: pointer;

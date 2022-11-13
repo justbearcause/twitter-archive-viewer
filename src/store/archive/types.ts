@@ -1,3 +1,4 @@
+import { TweetMediaModel } from "models";
 import FollowerModel from "models/FollowerModel";
 import FollowingModel from "models/FollowingModel";
 import TweetModel from "models/TweetModel";
@@ -12,13 +13,13 @@ export interface ArchiveState {
   tweets: TweetModel[];
   followers: FollowerModel[];
   followings: FollowingModel[];
-  isModalVisible: boolean;
-  modalContent?: JSX.Element;
+  isImageShown: boolean;
+  image?: TweetMediaModel;
 }
 
 export const initialState: ArchiveState = {
   tweets: [],
   followers: [],
   followings: [],
-  isModalVisible: false,
+  isImageShown: false,
 };
