@@ -3,10 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "packageManager": "yarn@1.22.19",
-  "engines": {
-    "node": "16.17.0",
-    "yarn": "1.22.19"
-  },
   "dependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.18.9",
     "@redux-devtools/extension": "^3.2.3",
